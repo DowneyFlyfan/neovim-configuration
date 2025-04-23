@@ -168,6 +168,13 @@ require("lazy").setup({
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
             require('config.fzf-lua')
+            require('fzf-lua').setup({
+                files = {
+                    actions = {
+                        ["ctrl-x"] = { require('fzf-lua.actions').file_create },
+                    }
+                }
+            })
         end
     },
 
