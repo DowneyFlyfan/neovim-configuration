@@ -13,7 +13,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-
     -- multi-line operations
     {
         "terryma/vim-multiple-cursors",
@@ -44,6 +43,7 @@ require("lazy").setup({
             "hrsh7th/cmp-path",     -- path auto-completion
             "hrsh7th/cmp-cmdline",  -- cmdline auto-completion
             "saadparwaiz1/cmp_luasnip",
+            "micangl/cmp-vimtex",
         },
         config = function()
             require("config.nvim-cmp")
@@ -143,7 +143,7 @@ require("lazy").setup({
         config = true,
     },
 
-    -- markdown & its renderer
+    -- Markdown related
     {
         "iamcco/markdown-preview.nvim",
         cmd = { "Markdownpreviewtoggle", "Markdownpreview", "Markdownpreviewstop" },
@@ -159,7 +159,33 @@ require("lazy").setup({
 
     {
         "MeanderingProgrammer/render-markdown.nvim",
-        ft = { "markdown", "codecompanion" },
+        ft = { "markdown", "codecompanion", "terminal" },
+    },
+
+    {
+        "Zeioth/markmap.nvim",
+        build = "yarn global add markmap-cli",
+        cmd = { "MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop" },
+        opts = {
+            html_output = "/tmp/markmap.html", -- (default) Setting a empty string "" here means: [Current buffer path].html
+            hide_toolbar = false,              -- (default)
+            grace_period = 3600000             -- (default) Stops markmap watch after 60 minutes. Set it to 0 to disable the grace_period.
+        },
+        config = function(_, opts)
+            require("markmap").setup(opts)
+            vim.api.nvim_set_keymap('n', '<Space>o', ':MarkmapOpen<CR>', { noremap = true, silent = true })
+        end,
+        ft = { "markdown" }
+    },
+
+    -- tex
+    {
+        "lervag/vimtex",
+        lazy = false, -- Load vimtex immediately for tex files
+        config = function()
+            require('config.vimtex')
+        end,
+        ft = { "tex" }
     },
 
     -- fzf-lua
@@ -168,13 +194,6 @@ require("lazy").setup({
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
             require('config.fzf-lua')
-            require('fzf-lua').setup({
-                files = {
-                    actions = {
-                        ["ctrl-x"] = { require('fzf-lua.actions').file_create },
-                    }
-                }
-            })
         end
     },
 
@@ -198,12 +217,6 @@ require("lazy").setup({
         end
     },
 
-    -- Tex
-    {
-        "xuhdev/vim-latex-live-preview",
-        ft = { "tex" },
-    },
-
     -- ai engine
     {
         "joshuavial/aider.nvim",
@@ -213,7 +226,8 @@ require("lazy").setup({
             debug = false,              -- enable debug logging
         },
         config = function()
-            require('config.snippets')
-        end
+            require('config.aider')
+        end,
     },
+
 })
