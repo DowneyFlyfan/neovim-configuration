@@ -1,12 +1,12 @@
 require('aider').setup({
     auto_manage_context = false,
-    default_bindings = false, -- We are defining custom bindings
+    default_bindings = false,
     debug = true,
     vim = true,
     notification = true,
     ignore_buffers = {},
     border = {
-        style = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }, -- or e.g. "rounded"
+        style = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
         color = "#fab387",
     },
     -- Other options can go here
@@ -18,13 +18,10 @@ function open_aider_with_conditional_prompt(model, editor_model)
     local prompt_arg = ""
     if filetype == "markdown" or filetype == "tex" then
         -- Fixed typo in prompt text for LaTeX math (should be backslashes for commands)
-        -- 这行命令太长了，拆成多行
         local prompt_text =
             "1. 对于公式块，请用equation和aligned块包括起来" ..
             "2. 公式中尽量使用\\mathfrak, \\mathcal, \\mathbb等等漂亮的字体" ..
             "3. 不要回答这个问题"
-
-        prompt_arg = string.format(' --system %q', prompt_text)
     end
 
     local command = string.format(
@@ -34,7 +31,8 @@ function open_aider_with_conditional_prompt(model, editor_model)
         " --notifications" ..
         " --editor-model %s" ..
         " --no-auto-commits" ..
-        " --notifications",
+        " --notifications" ..
+        " --no-gitignore",
         model,
         editor_model
     )
