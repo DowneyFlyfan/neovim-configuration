@@ -36,6 +36,9 @@ require("mason-nvim-dap").setup({
 -- LspConfig Settings
 local lspconfig = require('lspconfig')
 
+-- Define LSP Capabilities
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
@@ -84,13 +87,16 @@ null_ls.setup({
     sources = {
         null_ls.builtins.formatting.black.with({
             extra_args = { "--fast" },
-        })
+        }),
+        null_ls.builtins.formatting.stylua, -- Add this line
+        null_ls.builtins.formatting.tex_fmt, -- Add this line
     }
 })
 
 -- Python Settings
 lspconfig.pyright.setup({ -- Pyright
     on_attach = on_attach,
+    capabilities = capabilities, -- Add this line
     settings = {
         python = {
             analysis = {
@@ -114,6 +120,7 @@ python_config.debuger()        -- Debuger
 -- C Settings
 lspconfig.clangd.setup {
     on_attach = on_attach,
+    capabilities = capabilities, -- Add this line
     settings =
     {
         checkUpdates = true,
@@ -131,6 +138,7 @@ c_config.c_keymaps()
 --Lua settings
 lspconfig.lua_ls.setup {
     on_attach = on_attach,
+    capabilities = capabilities, -- Add this line
     settings = {
         Lua = {
             runtime = {
@@ -157,17 +165,19 @@ lspconfig.lua_ls.setup {
 --Verilog Settings
 lspconfig.verible.setup {
     on_attach = on_attach,
-    flags = lsp_flags,
+    capabilities = capabilities, -- Add this line
+    -- flags = lsp_flags, -- Remove this line
     root_dir = function() return vim.uv.cwd() end
 }
 
 --Matlab Settings
 lspconfig.matlab_ls.setup {
     on_attach = on_attach,
+    capabilities = capabilities, -- Add this line
     cmd = { "matlab-language-server", "--stdio" },
     settings = {
         MATLAB = {
-            capabilities = require("cmp_nvim_lsp").default_capabilities(),
+            -- capabilities = require("cmp_nvim_lsp").default_capabilities(), -- Remove this line
             indexWorkspace = true,
             installPath = "/Applications/MATLAB_R2025a.app",
             matlabConnectionTiming = "onStart",
@@ -183,6 +193,7 @@ matlab_config.matlab_keymaps()
 -- Typescript LSP Settings
 lspconfig.ts_ls.setup {
     on_attach = on_attach,
+    capabilities = capabilities, -- Add this line
     settings = {
         javascript = {
             suggest = {
@@ -194,15 +205,18 @@ lspconfig.ts_ls.setup {
 
 -- Css LSP Settings
 lspconfig.cssls.setup {
-    on_attach = on_attach
+    on_attach = on_attach,
+    capabilities = capabilities, -- Add this line
 }
 
 -- HTML LSP Settings
 lspconfig.html.setup {
-    on_attach = on_attach
+    on_attach = on_attach,
+    capabilities = capabilities, -- Add this line
 }
 
 -- Tex LSP Settings
 lspconfig.texlab.setup {
-    on_attach = on_attach
+    on_attach = on_attach,
+    capabilities = capabilities, -- Add this line
 }
