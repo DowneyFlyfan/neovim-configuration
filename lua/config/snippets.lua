@@ -54,7 +54,7 @@ ls.add_snippets("python", {
 ls.add_snippets("markdown", {
     -- Brackets
     ls.snippet("eq", {
-        t({ "$$", "\\begin{equation}", "\\begin{aligned}", "" }), 请尽量使用mathcal, mathfrak,
+        t({ "$$", "\\begin{equation}", "\\begin{aligned}", "" }),
         i(1, ""),
         t({ "", "\\end{aligned}", "\\end{equation}", "$$" }),
     }),
