@@ -10,16 +10,18 @@ require('mason').setup({
 })
 
 -- Mason-lspconfig Settings  (LS)
-require('mason-lspconfig').setup({
+--[[
+equire('mason-lspconfig').setup({
     ensure_installed = {
         'pyright', 'lua_ls',
-        'rust_analyzer', 'clangd',
-        'html', 'eslint',
+        'clangd', 'ts_ls',
+        'html', 'texlab',
         'cssls', 'verible',
-        'matlab_ls', 'ts_ls',
-        'texlab',
+        'matlab_ls'
     },
 })
+--]]
+
 
 -- Mason-null-ls Settings (Formatters)
 require("mason-null-ls").setup({
@@ -30,14 +32,11 @@ require("mason-null-ls").setup({
 -- Mason-nvim-dap Settings (Debugers)
 require("mason-nvim-dap").setup({
     ensure_installed = { "python", "cppdbg", "bash" },
-    automatic_setup = true, -- 自动配置 DAP 适配器
+    automatic_setup = true,
 })
 
 -- LspConfig Settings
 local lspconfig = require('lspconfig')
-
--- Define LSP Capabilities
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
@@ -47,7 +46,6 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>, CMP
-    -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     require "lsp_signature".on_attach({
         bind = true,            -- 这是必要的，确保输入模式下生效
@@ -87,16 +85,13 @@ null_ls.setup({
     sources = {
         null_ls.builtins.formatting.black.with({
             extra_args = { "--fast" },
-        }),
-        null_ls.builtins.formatting.stylua, -- Add this line
-        null_ls.builtins.formatting.tex_fmt, -- Add this line
+        })
     }
 })
 
 -- Python Settings
 lspconfig.pyright.setup({ -- Pyright
     on_attach = on_attach,
-    capabilities = capabilities, -- Add this line
     settings = {
         python = {
             analysis = {
@@ -120,7 +115,6 @@ python_config.debuger()        -- Debuger
 -- C Settings
 lspconfig.clangd.setup {
     on_attach = on_attach,
-    capabilities = capabilities, -- Add this line
     settings =
     {
         checkUpdates = true,
@@ -138,7 +132,6 @@ c_config.c_keymaps()
 --Lua settings
 lspconfig.lua_ls.setup {
     on_attach = on_attach,
-    capabilities = capabilities, -- Add this line
     settings = {
         Lua = {
             runtime = {
@@ -165,19 +158,17 @@ lspconfig.lua_ls.setup {
 --Verilog Settings
 lspconfig.verible.setup {
     on_attach = on_attach,
-    capabilities = capabilities, -- Add this line
-    -- flags = lsp_flags, -- Remove this line
+    flags = lsp_flags,
     root_dir = function() return vim.uv.cwd() end
 }
 
 --Matlab Settings
 lspconfig.matlab_ls.setup {
     on_attach = on_attach,
-    capabilities = capabilities, -- Add this line
     cmd = { "matlab-language-server", "--stdio" },
     settings = {
         MATLAB = {
-            -- capabilities = require("cmp_nvim_lsp").default_capabilities(), -- Remove this line
+            capabilities = require("cmp_nvim_lsp").default_capabilities(),
             indexWorkspace = true,
             installPath = "/Applications/MATLAB_R2025a.app",
             matlabConnectionTiming = "onStart",
@@ -193,7 +184,6 @@ matlab_config.matlab_keymaps()
 -- Typescript LSP Settings
 lspconfig.ts_ls.setup {
     on_attach = on_attach,
-    capabilities = capabilities, -- Add this line
     settings = {
         javascript = {
             suggest = {
@@ -205,18 +195,15 @@ lspconfig.ts_ls.setup {
 
 -- Css LSP Settings
 lspconfig.cssls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities, -- Add this line
+    on_attach = on_attach
 }
 
 -- HTML LSP Settings
 lspconfig.html.setup {
-    on_attach = on_attach,
-    capabilities = capabilities, -- Add this line
+    on_attach = on_attach
 }
 
 -- Tex LSP Settings
 lspconfig.texlab.setup {
-    on_attach = on_attach,
-    capabilities = capabilities, -- Add this line
+    on_attach = on_attach
 }

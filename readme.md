@@ -98,7 +98,7 @@ This is not an exhaustive list, but highlights some important custom bindings:
 
 ## Demo
 
-[观看演示视频](REPLACE_WITH_VIDEO_URL)
+[Watch the Demo Video](REPLACE_WITH_VIDEO_URL)
 
 ## Configuration Structure
 

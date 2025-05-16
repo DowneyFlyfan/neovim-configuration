@@ -48,12 +48,10 @@ ls.add_snippets("python", {
         i(1, "comment"), -- 插入节点1，用户输入
         t(" ----"),
     }),
-    ls.snippet("rs", { -- "rs" for raw string
-        t('r"""'),
-        t("\n"),
-        i(1, "raw string content"), -- 插入节点1，用户输入
-        t("\n"),
-        t('"""'),
+    ls.snippet("ep", {
+        t({ 'r"""', '' }),
+        i(1, "Explanation"), -- 插入节点1，用户输入
+        t({ '', '"""' }),
     }),
 })
 
