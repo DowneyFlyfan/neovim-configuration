@@ -69,10 +69,6 @@ vim.api.nvim_set_keymap('v', 'y', '"+y', { noremap = true, silent = true }) -- Y
 
 -- Formatting
 vim.api.nvim_set_keymap('n', 'fm', ':lua vim.lsp.buf.format()<CR>', { noremap = true, silent = true })
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*",
-    command = "silent! lua vim.lsp.buf.format()",
-})
 
 -- Folding
 vim.wo.foldmethod = 'expr'

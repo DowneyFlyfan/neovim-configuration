@@ -11,7 +11,7 @@ require('mason').setup({
 
 -- Mason-lspconfig Settings  (LS)
 --[[
-equire('mason-lspconfig').setup({
+require('mason-lspconfig').setup({
     ensure_installed = {
         'pyright', 'lua_ls',
         'clangd', 'ts_ls',
@@ -21,7 +21,6 @@ equire('mason-lspconfig').setup({
     },
 })
 --]]
-
 
 -- Mason-null-ls Settings (Formatters)
 require("mason-null-ls").setup({
@@ -46,6 +45,7 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>, CMP
+    -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     require "lsp_signature".on_attach({
         bind = true,            -- 这是必要的，确保输入模式下生效
@@ -170,7 +170,7 @@ lspconfig.matlab_ls.setup {
         MATLAB = {
             capabilities = require("cmp_nvim_lsp").default_capabilities(),
             indexWorkspace = true,
-            installPath = "/Applications/MATLAB_R2025a.app",
+            installPath = "/Applications/MATLAB_R2021b.app",
             matlabConnectionTiming = "onStart",
             telemetry = false,
         },
