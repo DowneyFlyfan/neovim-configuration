@@ -78,15 +78,15 @@ end
 vim.api.nvim_set_keymap("n", "T", ":lua open_terminal()<CR>", { noremap = true, silent = true })
 
 -- CUDA files
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	pattern = "*.cu",
-	command = "set filetype=cc",
-})
-
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	pattern = "*.cuh",
-	command = "set filetype=cuh",
-})
+-- vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+-- 	pattern = "*.cu",
+-- 	command = "set filetype=cc",
+-- })
+--
+-- vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+-- 	pattern = "*.cuh",
+-- 	command = "set filetype=cuh",
+-- })
 
 -- Tex specific settings (moved some to config/vimtex.lua)
 vim.api.nvim_create_autocmd("FileType", {
@@ -96,6 +96,39 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.wrap = true -- 启用软换行
 		vim.opt_local.linebreak = true -- 按单词边界换行
 		vim.opt_local.breakindent = true -- 保持缩进
+	end,
+})
+
+-- Delay Edit
+local group = vim.api.nvim_create_augroup("MyDelayedEOnFileOpen", { clear = true })
+
+vim.api.nvim_create_autocmd("BufReadPost", {
+	group = group,
+	pattern = "*",
+	callback = function(args)
+		local bufnr = args.buf
+		local bufname = vim.api.nvim_buf_get_name(bufnr)
+
+		if bufname == nil or bufname == "" then
+			return
+		end
+
+		if vim.b[bufnr].my_delayed_e_ran_on_first_load then
+			return
+		end
+		vim.b[bufnr].my_delayed_e_ran_on_first_load = true
+
+		vim.defer_fn(function()
+			if not vim.api.nvim_buf_is_loaded(bufnr) then
+				return
+			end
+
+			local current_bufnr_at_exec_time = vim.api.nvim_get_current_buf()
+			if current_bufnr_at_exec_time == bufnr then
+				vim.cmd("e")
+			else
+			end
+		end, 20) -- 20ms
 	end,
 })
 
