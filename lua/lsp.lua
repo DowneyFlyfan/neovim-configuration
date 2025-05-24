@@ -110,9 +110,9 @@ require("mason-lspconfig").setup({
 			lspconfig.clangd.setup({
 				on_attach = on_attach,
 				capabilities = capabilities,
-				cmd = { "/opt/homebrew/opt/llvm/bin/clangd" }, -- 你原来的配置是 path, lspconfig 标准是 cmd
-				filetypes = { "c", "cpp", "cc", "h", "cuh" }, -- 这些是 setup 的顶层参数
-				flags = { debounce_text_changes = 150 }, -- 这个也是
+				cmd = { "/usr/bin/clangd" },
+				filetypes = { "c", "cpp", "cc", "h", "cuh" },
+				flags = { debounce_text_changes = 150 },
 			})
 		end,
 
