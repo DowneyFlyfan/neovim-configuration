@@ -69,8 +69,9 @@ vim.diagnostic.config({
 
 require("mason-lspconfig").setup({
     ensure_installed = {
-        "pyright", "lua_ls", "clangd", "ts_ls", "html", "texlab", "cssls", "verible", "matlab_ls",
-        -- "ast_grep", "black", "rustfmt", "prettier", "prettierd",
+        "pyright", "lua_ls", "clangd", "ts_ls", "html",
+        "texlab", "cssls", "verible", "matlab_ls",
+        -- "ast_grep", "black", "rustfmt", "prettier", "prettierd", "stylua"
     },
     handlers = {
         function(server_name)
