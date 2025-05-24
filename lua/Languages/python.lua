@@ -6,7 +6,7 @@ function M.python_keymaps()
     vim.api.nvim_create_autocmd("FileType", {
         pattern = "python",
         callback = function()
-            vim.keymap.set('n', '<C-e>', ':w<CR>:!python3.12 %<CR>', { noremap = true, silent = true })
+            vim.keymap.set('n', '<C-e>', ':w<CR>:!python3 %<CR>', { noremap = true, silent = true })
             vim.keymap.set('n', '<M-c>', ":lua require'dap'.continue()<CR>",
                 { noremap = true, silent = true })
             vim.keymap.set('n', '<M-i>', ":lua require'dap'.step_into()<CR>",
@@ -23,7 +23,7 @@ end
 function M.debuger()
     dap.adapters.python = {
         type = "executable",
-        command = "/opt/homebrew/bin/python3.12",
+        command = "python3",
         args = { "-m", "debugpy.adapter" },
     }
 
@@ -33,7 +33,6 @@ function M.debuger()
             request = "launch",
             name = "Launch file",
             program = "${file}",
-            pythonPath = "/opt/homebrew/bin/python3.12",
         },
     }
 end

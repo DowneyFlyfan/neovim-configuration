@@ -1,209 +1,185 @@
 -- Mason Settings
-require('mason').setup({
+require("mason").setup({
     ui = {
         icons = {
             package_installed = "✓",
             package_pending = "➜",
-            package_uninstalled = "✗"
-        }
+            package_uninstalled = "✗",
+        },
     },
 })
 
--- Mason-lspconfig Settings  (LS)
---[[
-require('mason-lspconfig').setup({
-    ensure_installed = {
-        'pyright', 'lua_ls',
-        'clangd', 'ts_ls',
-        'html', 'texlab',
-        'cssls', 'verible',
-        'matlab_ls'
-    },
-})
---]]
-
--- Mason-null-ls Settings (Formatters)
-require("mason-null-ls").setup({
-    ensure_installed = { "prettier", "stylua", 'tex_fmt', },
-    automatic_installation = true,
-})
-
--- Mason-nvim-dap Settings (Debugers)
-require("mason-nvim-dap").setup({
-    ensure_installed = { "python", "cppdbg", "bash" },
-    automatic_setup = true,
-})
-
--- LspConfig Settings
-local lspconfig = require('lspconfig')
-
+local lspconfig = require("lspconfig")
 local opts = { noremap = true, silent = true }
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
 
 local on_attach = function(client, bufnr)
-    -- Enable completion triggered by <c-x><c-o>, CMP
-    -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-    require "lsp_signature".on_attach({
-        bind = true,            -- 这是必要的，确保输入模式下生效
-        hint_enable = true,     -- 启用虚拟提示
-        floating_window = true, -- 使用浮动窗口显示签名
+    require("lsp_signature").on_attach({
+        bind = true,
+        hint_enable = true,
+        floating_window = true,
         fix_pos = false,
         hint_prefix = "🔍 ",
-        hi_parameter = "LspSignatureActiveParameter", -- 高亮当前参数
+        hi_parameter = "LspSignatureActiveParameter",
         handler_opts = {
-            border = "rounded"
+            border = "rounded",
         },
     }, bufnr)
 
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
     local bufopts = { noremap = true, silent = true, buffer = bufnr }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    vim.keymap.set('n', '<C-h>', vim.lsp.buf.hover, bufopts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-    vim.keymap.set('n', '<space>wl', function()
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+    vim.keymap.set("n", "<C-h>", vim.lsp.buf.hover, bufopts)
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
+    vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+    vim.keymap.set("n", "<space>wl", function()
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, bufopts)
-
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    vim.keymap.set("n", "<space>f", function()
-        vim.lsp.buf.format({ async = true })
-    end, bufopts)
+    vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*",
+        callback = function(args)
+            require("conform").format({ bufnr = args.buf })
+        end,
+    })
 end
 
--- Null Ls
-local null_ls = require("null-ls")
-null_ls.setup({
-    sources = {
-        null_ls.builtins.formatting.black.with({
-            extra_args = { "--fast" },
-        })
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+vim.diagnostic.config({
+    signs = true,
+    virtual_text = true,
+    underline = true,
+
+    float = {
+        visible = true,
+        source = "if_many",
+        border = "rounded",
+        header = true,
+        prefix = "💡 ",
     }
 })
 
--- Python Settings
-lspconfig.pyright.setup({ -- Pyright
-    on_attach = on_attach,
-    settings = {
-        python = {
-            analysis = {
-                typeCheckingMode = "basic",
-                autoSearchPaths = true,
-                useLibraryCodeForTypes = true,
-                diagnosticMode = "workspace",
-                autoImportCompletions = false,
-            },
-            pythonPath = '/opt/homebrew/bin/python3.12',
-            extraPaths = "/opt/homebrew/lib/python3.12/site-packages/torch/include/torch",
-        },
+require("mason-lspconfig").setup({
+    ensure_installed = {
+        "pyright", "lua_ls", "clangd", "ts_ls", "html", "texlab", "cssls", "verible", "matlab_ls",
+        -- "ast_grep", "black", "rustfmt", "prettier", "prettierd",
+    },
+    handlers = {
+        function(server_name)
+            lspconfig[server_name].setup({
+                on_attach = on_attach,
+                capabilities = capabilities,
+            })
+        end,
+
+        ["pyright"] = function()
+            lspconfig.pyright.setup({
+                on_attach = on_attach,
+                capabilities = capabilities,
+                settings = {
+                    python = {
+                        analysis = {
+                            typeCheckingMode = "basic",
+                            autoSearchPaths = true,
+                            useLibraryCodeForTypes = true,
+                            diagnosticMode = "openFilesOnly",
+                            autoImportCompletions = false,
+                        },
+                    },
+                },
+            })
+        end,
+
+        ["clangd"] = function()
+            lspconfig.clangd.setup({
+                on_attach = on_attach,
+                capabilities = capabilities,
+                cmd = { "/opt/homebrew/opt/llvm/bin/clangd" }, -- 你原来的配置是 path, lspconfig 标准是 cmd
+                filetypes = { "c", "cpp", "cc", "h", "cuh" }, -- 这些是 setup 的顶层参数
+                flags = { debounce_text_changes = 150 },     -- 这个也是
+            })
+        end,
+
+        ["lua_ls"] = function()
+            lspconfig.lua_ls.setup({
+                on_attach = on_attach,
+                capabilities = capabilities,
+                settings = {
+                    Lua = {
+                        runtime = { version = "LuaJIT" },
+                        diagnostics = { globals = { "vim" } },
+                        workspace = { library = vim.api.nvim_get_runtime_file("", true), checkThirdParty = false },
+                        telemetry = { enable = false },
+                    },
+                },
+            })
+        end,
+
+        ["verible"] = function()
+            lspconfig.verible.setup({
+                on_attach = on_attach,
+                capabilities = capabilities,
+                root_dir = function() return vim.uv.cwd() end,
+            })
+        end,
+
+        ["matlab_ls"] = function()
+            lspconfig.matlab_ls.setup({
+                on_attach = on_attach,
+                capabilities = capabilities,
+                settings = {
+                    MATLAB = {
+                        indexWorkspace = true,
+                        installPath = "/Applications/MATLAB_R2021b.app",
+                        matlabConnectionTiming = "onStart",
+                        telemetry = false,
+                    },
+                },
+                single_file_support = true,
+            })
+        end,
+
+        ["ts_ls"] = function()
+            lspconfig.ts_ls.setup({
+                on_attach = on_attach,
+                capabilities = capabilities,
+                settings = {
+                    javascript = { suggest = { completeFunctionCalls = true } },
+                    typescript = { suggest = { completeFunctionCalls = true } }, -- 通常也会为ts配置
+                },
+            })
+        end,
+
+        -- cssls, html, texlab 会使用上面的默认 handler，因为它们在你的原配置中没有特殊的 settings。
+        -- 如果它们也需要特殊 settings，像上面一样为它们添加专门的 handler 即可。
+        -- 例如:
+        -- ["cssls"] = function ()
+        -- lspconfig.cssls.setup({ on_attach = on_attach, capabilities = capabilities, --[[ special settings here ]] })
+        -- end,
     },
 })
 
-local python_config = require('Languages.python')
+-- Config for each languages
+local python_config = require("Languages.python") 
 
-python_config.python_keymaps() -- Keymaps
-python_config.debuger()        -- Debuger
+python_config.python_keymaps() 
+python_config.debuger() 
 
--- C Settings
-lspconfig.clangd.setup {
-    on_attach = on_attach,
-    settings =
-    {
-        checkUpdates = true,
-    },
-    flags = {
-        debounce_text_changes = 150,
-    },
-    filetypes = { "c", "cpp", "cc", "h", "cuh" },
-    path = '/opt/homebrew/opt/llvm/bin/clangd'
-}
-
-local c_config = require('Languages.c')
+local c_config = require("Languages.c") 
 c_config.c_keymaps()
 
---Lua settings
-lspconfig.lua_ls.setup {
-    on_attach = on_attach,
-    settings = {
-        Lua = {
-            runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in Neovim)
-                version = 'LuaJIT',
-            },
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = { 'vim' },
-            },
-            workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file("", true),
-                checkThirdParty = false, -- Prevents diagnostics on plugins
-            },
-            -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = {
-                enable = false,
-            },
-        },
-    },
-}
+local matlab_config = require("Languages.matlab") 
+matlab_config.matlab_keymaps() 
 
---Verilog Settings
-lspconfig.verible.setup {
-    on_attach = on_attach,
-    flags = lsp_flags,
-    root_dir = function() return vim.uv.cwd() end
-}
-
---Matlab Settings
-lspconfig.matlab_ls.setup {
-    on_attach = on_attach,
-    cmd = { "matlab-language-server", "--stdio" },
-    settings = {
-        MATLAB = {
-            capabilities = require("cmp_nvim_lsp").default_capabilities(),
-            indexWorkspace = true,
-            installPath = "/Applications/MATLAB_R2021b.app",
-            matlabConnectionTiming = "onStart",
-            telemetry = false,
-        },
-    },
-    single_file_support = true,
-}
-
-local matlab_config = require('Languages.matlab')
-matlab_config.matlab_keymaps()
-
--- Typescript LSP Settings
-lspconfig.ts_ls.setup {
-    on_attach = on_attach,
-    settings = {
-        javascript = {
-            suggest = {
-                completeFunctionCalls = true,
-            }
-        }
-    }
-}
-
--- Css LSP Settings
-lspconfig.cssls.setup {
-    on_attach = on_attach
-}
-
--- HTML LSP Settings
-lspconfig.html.setup {
-    on_attach = on_attach
-}
-
--- Tex LSP Settings
-lspconfig.texlab.setup {
-    on_attach = on_attach
-}
+require("mason-nvim-dap").setup({
+    ensure_installed = { "python", "cppdbg", "bash" },
+    automatic_setup = true, -- 这个 automatic_setup 是 mason-nvim-dap 的，不是 mason-lspconfig 的
+})

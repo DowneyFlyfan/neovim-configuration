@@ -16,15 +16,6 @@ local m = extras.m
 local l = extras.l
 local postfix = require "luasnip.extras.postfix".postfix
 
-
-ls.add_snippets("lua", {
-    ls.snippet("cm", {
-        ls.text_node({ "--[[", "" }),
-        ls.insert_node(1, "comment"), -- 插入节点1，用户输入
-        ls.text_node({ " ", "--]]" }),
-    }),
-})
-
 ls.add_snippets("matlab", {
     ls.snippet("cm", {
         t({ "%{", "" }),
