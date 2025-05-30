@@ -8,7 +8,8 @@ require("conform").setup({
 		python = { "black" },
 		rust = { "rustfmt", lsp_format = "fallback" },
 		javascript = { "prettierd", "prettier", stop_after_first = true },
-		tex = { "txt_fmt" },
+		tex = { "tex_fmt" },
+		verilog = { "verible" },
 	},
 })
 

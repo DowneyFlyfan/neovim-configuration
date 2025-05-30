@@ -77,28 +77,6 @@ function open_terminal()
 end
 vim.api.nvim_set_keymap("n", "T", ":lua open_terminal()<CR>", { noremap = true, silent = true })
 
--- CUDA files
--- vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
--- 	pattern = "*.cu",
--- 	command = "set filetype=cc",
--- })
---
--- vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
--- 	pattern = "*.cuh",
--- 	command = "set filetype=cuh",
--- })
-
--- Tex specific settings (moved some to config/vimtex.lua)
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "tex",
-	callback = function()
-		vim.opt_local.textwidth = 100 -- 行宽限制
-		vim.opt_local.wrap = true -- 启用软换行
-		vim.opt_local.linebreak = true -- 按单词边界换行
-		vim.opt_local.breakindent = true -- 保持缩进
-	end,
-})
-
 -- Delay Edit
 local group = vim.api.nvim_create_augroup("MyDelayedEOnFileOpen", { clear = true })
 

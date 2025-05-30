@@ -67,6 +67,11 @@ vim.diagnostic.config({
 	},
 })
 
+require("mason-nvim-dap").setup({
+	ensure_installed = { "python", "cppdbg", "bash" },
+	automatic_setup = true, -- 这个 automatic_setup 是 mason-nvim-dap 的，不是 mason-lspconfig 的
+})
+
 require("mason-lspconfig").setup({
 	ensure_installed = {
 		"pyright",
@@ -110,8 +115,8 @@ require("mason-lspconfig").setup({
 			lspconfig.clangd.setup({
 				on_attach = on_attach,
 				capabilities = capabilities,
-				cmd = { "/usr/bin/clangd" },
-				filetypes = { "c", "cpp", "cc", "h", "cuh" },
+				cmd = { "/opt/homebrew/opt/llvm/bin/clangd" },
+				filetypes = { "c", "cpp", "cc", "h", "cuh", "cuda" },
 				flags = { debounce_text_changes = 150 },
 			})
 		end,
@@ -167,25 +172,10 @@ require("mason-lspconfig").setup({
 				},
 			})
 		end,
-
-		-- cssls, html, texlab 会使用上面的默认 handler
-		-- 如果它们也需要特殊 settings，像上面一样为它们添加专门的 handler 即可
 	},
 })
 
 -- Independent Config for each language
-local python_config = require("Languages.python")
-
-python_config.python_keymaps()
-python_config.debuger()
-
-local c_config = require("Languages.c")
-c_config.c_keymaps()
-
-local matlab_config = require("Languages.matlab")
-matlab_config.matlab_keymaps()
-
-require("mason-nvim-dap").setup({
-	ensure_installed = { "python", "cppdbg", "bash" },
-	automatic_setup = true, -- 这个 automatic_setup 是 mason-nvim-dap 的，不是 mason-lspconfig 的
-})
+require("Languages.python")
+require("Languages.c")
+require("Languages.matlab")

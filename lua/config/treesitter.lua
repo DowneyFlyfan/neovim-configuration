@@ -10,6 +10,8 @@ require("nvim-treesitter.configs").setup({
 		"python",
 		"javascript",
 		"cuda",
+		"matlab",
+		"verilog",
 	},
 	sync_install = false,
 	auto_install = true,
