@@ -80,6 +80,7 @@ require("lazy").setup({
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
 
 	{
@@ -159,7 +160,12 @@ require("lazy").setup({
 
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" }, -- if you prefer nvim-web-devicons
+		---@module 'render-markdown'
+		---@type render.md.UserConfig
+		completions = { lsp = { enabled = true } },
 		ft = { "markdown", "codecompanion", "terminal" },
+		enabled = true,
 	},
 
 	{

@@ -72,6 +72,27 @@ require("mason-nvim-dap").setup({
 	automatic_setup = true, -- 这个 automatic_setup 是 mason-nvim-dap 的，不是 mason-lspconfig 的
 })
 
+require("mason-tool-installer").setup({
+	ensure_installed = {
+		"ast_grep",
+		"black",
+		"rustfmt",
+		"prettier",
+		"prettierd",
+		"stylua",
+		"txtfmt",
+	},
+
+	auto_update = false,
+	run_on_start = true,
+	start_delay = 3000,
+	debounce_hours = 5, -- at least 5 hours between attempts to install/update
+	integrations = {
+		["mason-lspconfig"] = true,
+		["mason-nvim-dap"] = true,
+	},
+})
+
 require("mason-lspconfig").setup({
 	ensure_installed = {
 		"pyright",
@@ -83,7 +104,7 @@ require("mason-lspconfig").setup({
 		"cssls",
 		"verible",
 		"matlab_ls",
-		-- "ast_grep", "black", "rustfmt", "prettier", "prettierd", "stylua", "txtfmt"
+		"marksman",
 	},
 	handlers = {
 		function(server_name)
