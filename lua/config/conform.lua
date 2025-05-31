@@ -10,6 +10,16 @@ require("conform").setup({
 		javascript = { "prettierd", "prettier", stop_after_first = true },
 		tex = { "tex_fmt" },
 		verilog = { "verible" },
+
+		-- sh series
+		sh = { "beautysh" },
+		zsh = { "beautysh" },
+		bash = { "beautysh" },
+		ksh = { "beautysh" },
+		csh = { "beautysh" },
+
+		c = { "ast_grep" },
+		matlab = { "ast_grep" },
 	},
 })
 

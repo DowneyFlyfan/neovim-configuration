@@ -12,6 +12,7 @@ require("nvim-treesitter.configs").setup({
 		"cuda",
 		"matlab",
 		"verilog",
+		"bash",
 	},
 	sync_install = false,
 	auto_install = true,
