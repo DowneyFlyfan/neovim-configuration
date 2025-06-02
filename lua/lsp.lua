@@ -1,5 +1,5 @@
 -- Mason Settings
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = vim.lsp.protocol.make_client_capabilities() -- Remove local
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, { noremap = true, silent = true })
@@ -7,7 +7,7 @@ vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { noremap = true, silent = t
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { noremap = true, silent = true })
 vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, { noremap = true, silent = true })
 
-local on_attach = function(client, bufnr)
+on_attach = function(client, bufnr) -- Remove local
 	require("lsp_signature").on_attach({
 		bind = true,
 		hint_enable = true,
@@ -61,94 +61,6 @@ vim.diagnostic.config({
 })
 
 -- Little snippets
-vim.lsp.config["pyright"] = {
-	on_attach = on_attach,
-	capabilities = capabilities,
-	settings = {
-		python = {
-			analysis = {
-				typeCheckingMode = "basic",
-				autoSearchPaths = true,
-				useLibraryCodeForTypes = true,
-				diagnosticMode = "openFilesOnly",
-				autoImportCompletions = false,
-			},
-		},
-	},
-}
-
-vim.lsp.config["luals"] = {
-	on_attach = on_attach,
-	capabilities = capabilities,
-	cmd = { "lua-language-server" },
-	filetypes = { "lua" },
-	root_markers = { ".luarc.json", ".luarc.jsonc" },
-	settings = {
-		runtime = { version = "LuaJIT" },
-		diagnostics = { globals = { "vim" } },
-		workspace = { library = vim.api.nvim_get_runtime_file("", true), checkThirdParty = false },
-		telemetry = { enable = false },
-	},
-}
-
-vim.lsp.config["clangd"] = {
-	on_attach = on_attach,
-	capabilities = capabilities,
-	cmd = { "/opt/homebrew/opt/llvm/bin/clangd" },
-	filetypes = { "c", "cpp", "cc", "h", "cuh", "cuda" },
-	flags = { debounce_text_changes = 150 },
-}
-
-vim.lsp.config["verible"] = {
-	on_attach = on_attach,
-	capabilities = capabilities,
-	root_dir = function()
-		return vim.uv.cwd()
-	end,
-}
-
-vim.lsp.config["matlab_ls"] = {
-	on_attach = on_attach,
-	capabilities = capabilities,
-	settings = {
-		MATLAB = {
-			indexWorkspace = true,
-			installPath = "/Applications/MATLAB_R2021b.app",
-			matlabConnectionTiming = "onStart",
-			telemetry = false,
-		},
-	},
-	single_file_support = true,
-}
-
-vim.lsp.config["ts_ls"] = {
-	on_attach = on_attach,
-	capabilities = capabilities,
-	settings = {
-		javascript = { suggest = { completeFunctionCalls = true } },
-		typescript = { suggest = { completeFunctionCalls = true } }, -- 通常也会为ts配置
-	},
-}
-
-vim.lsp.config["cssls"] = {
-	on_attach = on_attach,
-	capabilities = capabilities,
-}
-
-vim.lsp.config["html"] = {
-	on_attach = on_attach,
-	capabilities = capabilities,
-}
-
-vim.lsp.config["texlab"] = {
-	on_attach = on_attach,
-	capabilities = capabilities,
-}
-
-vim.lsp.config["marksman"] = {
-	on_attach = on_attach,
-	capabilities = capabilities,
-}
 
 require("mason-nvim-dap").setup({
 	ensure_installed = { "python", "cppdbg", "bash" },
@@ -176,7 +88,13 @@ require("mason-tool-installer").setup({
 	},
 })
 
--- Independent Config for each language
 require("Languages.python")
 require("Languages.c")
 require("Languages.matlab")
+require("Languages.lua_config") -- For luals
+require("Languages.typescript") -- For ts_ls
+require("Languages.css") -- For cssls
+require("Languages.html") -- For html lsp
+require("Languages.tex") -- For texlab
+require("Languages.markdown") -- For marksman
+require("Languages.verilog") -- For verible

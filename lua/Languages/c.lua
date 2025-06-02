@@ -20,4 +20,13 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- LSP config for clangd
+vim.lsp.config["clangd"] = {
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = { "/opt/homebrew/opt/llvm/bin/clangd" }, -- This path might be user-specific
+	filetypes = { "c", "cpp", "cc", "h", "cuh", "cuda" },
+	flags = { debounce_text_changes = 150 },
+}
+
 return M

@@ -21,4 +21,19 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- LSP config for matlab_ls
+vim.lsp.config["matlab_ls"] = {
+	on_attach = on_attach,
+	capabilities = capabilities,
+	settings = {
+		MATLAB = {
+			indexWorkspace = true,
+			installPath = "/Applications/MATLAB_R2021b.app", -- This path is user-specific
+			matlabConnectionTiming = "onStart",
+			telemetry = false,
+		},
+	},
+	single_file_support = true,
+}
+
 return M

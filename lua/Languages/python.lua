@@ -9,6 +9,23 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- LSP config for pyright
+vim.lsp.config["pyright"] = {
+	on_attach = on_attach,
+	capabilities = capabilities,
+	settings = {
+		python = {
+			analysis = {
+				typeCheckingMode = "basic",
+				autoSearchPaths = true,
+				useLibraryCodeForTypes = true,
+				diagnosticMode = "openFilesOnly",
+				autoImportCompletions = false, -- Ensure this is false if you don't want auto-imports
+			},
+		},
+	},
+}
+
 local dap = require("dap")
 
 dap.adapters.python = {
