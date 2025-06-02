@@ -2,6 +2,8 @@ vim.opt.mouse = "a" -- Allow mouse in all modes
 vim.o.termguicolors = true -- Enable true color support
 vim.o.background = "light" -- Light color scheme
 vim.o.scrolloff = 5 -- Keep 5 lines above/below cursor
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 -- Terminal Mode Shortcuts
 vim.api.nvim_set_keymap("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
@@ -80,6 +82,9 @@ vim.api.nvim_set_keymap("n", "T", ":lua open_terminal()<CR>", { noremap = true, 
 -- Delay Edit
 local group = vim.api.nvim_create_augroup("MyDelayedEOnFileOpen", { clear = true })
 
+-- views can only be fully collapsed with the global statusline
+vim.opt.laststatus = 3
+
 vim.api.nvim_create_autocmd("BufReadPost", {
 	group = group,
 	pattern = "*",
@@ -109,6 +114,18 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 		end, 20) -- 20ms
 	end,
 })
+
+-- Aider Shortcuts
+function _G.run_aider_in_terminal()
+	vim.cmd("vsplit | terminal")
+	vim.defer_fn(function()
+		vim.api.nvim_input("aaider<CR>")
+	end, 700)
+	vim.defer_fn(function()
+		vim.cmd("q")
+	end, 800)
+end
+vim.api.nvim_set_keymap("n", "<D-k>", "<cmd>lua run_aider_in_terminal()<CR>", { noremap = true, silent = true })
 
 -- Debugging
 -- vim.lsp.set_log_level("INFO")

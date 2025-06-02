@@ -14,53 +14,53 @@ vim.g.mkdp_command_for_global = 1
 vim.g.mkdp_open_to_the_world = 0
 
 -- 使用自定义 IP 打开预览页面
-vim.g.mkdp_open_ip = ''
+vim.g.mkdp_open_ip = ""
 
 -- 指定用于打开预览页面的浏览器
-vim.g.mkdp_browser = ''
+vim.g.mkdp_browser = ""
 
 -- 打开预览页面时在命令行中不显示 URL
 vim.g.mkdp_echo_preview_url = 1
 
 -- 自定义打开预览页面的 Vim 函数
-vim.g.mkdp_browserfunc = ''
+vim.g.mkdp_browserfunc = ""
 
 -- Markdown 渲染选项
 vim.g.mkdp_preview_options = {
-  mkit = {},
-  katex = {},
-  uml = {},
-  maid = {},
-  disable_sync_scroll = 0,
-  sync_scroll_type = 'middle',
-  hide_yaml_meta = 1,
-  sequence_diagrams = {},
-  flowchart_diagrams = {},
-  content_editable = false,
-  disable_filename = 0,
-  toc = {}
+	mkit = {},
+	katex = {},
+	uml = {},
+	maid = {},
+	disable_sync_scroll = 0,
+	sync_scroll_type = "middle",
+	hide_yaml_meta = 1,
+	sequence_diagrams = {},
+	flowchart_diagrams = {},
+	content_editable = false,
+	disable_filename = 0,
+	toc = {},
 }
 
 -- 使用自定义 Markdown 样式
-vim.g.mkdp_markdown_css = ''
+vim.g.mkdp_markdown_css = ""
 
 -- 使用自定义高亮样式
-vim.g.mkdp_highlight_css = ''
+vim.g.mkdp_highlight_css = ""
 
 -- 使用自定义端口启动服务器
-vim.g.mkdp_port = ''
+vim.g.mkdp_port = ""
 
 -- 预览页面标题
-vim.g.mkdp_page_title = '「${name}」'
+vim.g.mkdp_page_title = "「${name}」"
 
 -- 使用自定义的图像位置
-vim.g.mkdp_images_path = '/home/user/.markdown_images'
+vim.g.mkdp_images_path = "/home/user/.markdown_images"
 
 -- 识别的文件类型
-vim.g.mkdp_filetypes = { 'markdown' }
+vim.g.mkdp_filetypes = { "markdown" }
 
 -- 设置默认主题（'dark' 或 'light'）
-vim.g.mkdp_theme = 'light'
+vim.g.mkdp_theme = "light"
 
 -- 合并预览窗口
 vim.g.mkdp_combine_preview = 0
@@ -69,6 +69,4 @@ vim.g.mkdp_combine_preview = 0
 vim.g.mkdp_combine_preview_auto_refresh = 1
 
 -- Markdown Toggle
-vim.api.nvim_set_keymap('n', 'mp', ':MarkdownPreviewToggle<CR>', { noremap = true, silent = true })
-
-
+vim.api.nvim_set_keymap("n", "mp", ":MarkdownPreviewToggle<CR>", { noremap = true, silent = true })
