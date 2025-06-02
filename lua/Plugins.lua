@@ -73,12 +73,43 @@ require("lazy").setup({
 		end,
 	},
 
-	---- lsp manager
-
 	-- lsp tools
 	{
-		"williamboman/mason.nvim",
-		"williamboman/mason-lspconfig.nvim",
+		"mason-org/mason.nvim",
+		opts = {
+			ui = {
+				icons = {
+					package_installed = "✓",
+					package_pending = "➜",
+					package_uninstalled = "✗",
+				},
+			},
+		},
+	},
+
+	{
+		"mason-org/mason-lspconfig.nvim",
+		opts = {
+			ensure_installed = {
+				"pyright",
+				"lua_ls",
+				"clangd",
+				"ts_ls",
+				"html",
+				"texlab",
+				"cssls",
+				"verible",
+				"matlab_ls",
+				"marksman",
+			},
+		},
+		dependencies = {
+			{ "mason-org/mason.nvim", opts = {} },
+			"neovim/nvim-lspconfig",
+		},
+	},
+
+	{
 		"neovim/nvim-lspconfig",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
@@ -228,10 +259,19 @@ require("lazy").setup({
 		"yetone/avante.nvim",
 		event = "VeryLazy",
 		version = false, -- Never set this value to "*"! Never!
+		opts = {
+			provider = "gemini",
+			gemini = {
+				api_key_name = "GEMINI_API_KEY",
+				model = "gemini-2.5-flash-preview-04-17",
+				-- model = "gemini-2.5-pro-exp-03-25",
+			},
+			windows = {
+				position = "smart",
+				width = 38,
+			},
+		},
 
-		config = function()
-			require("config.avante")
-		end,
 		build = "make",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",

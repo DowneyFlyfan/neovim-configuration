@@ -19,7 +19,6 @@ require("conform").setup({
 		csh = { "beautysh" },
 
 		c = { "ast_grep" },
-		matlab = { "ast_grep" },
 	},
 })
 
