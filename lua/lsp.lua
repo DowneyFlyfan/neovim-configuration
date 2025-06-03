@@ -75,7 +75,7 @@ require("mason-tool-installer").setup({
 		"prettier",
 		"prettierd",
 		"stylua",
-		"txtfmt",
+		"tex-fmt",
 	},
 
 	auto_update = false,

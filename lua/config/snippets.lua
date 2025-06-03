@@ -48,11 +48,17 @@ ls.add_snippets("python", {
 
 -- Markdown Snippets
 ls.add_snippets("markdown", {
-	-- Brackets
+	-- Brackets & Matrixs
 	ls.snippet("eq", {
 		t({ "$$", "\\begin{equation}", "\\begin{aligned}", "" }),
 		i(1, ""),
 		t({ "", "\\end{aligned}", "\\end{equation}", "$$" }),
+	}),
+
+	ls.snippet("gs", {
+		t({ "\\begin{cases}", "" }),
+		i(1, ""),
+		t({ "", "\\end{cases}" }),
 	}),
 
 	ls.snippet("f", {
@@ -67,6 +73,12 @@ ls.add_snippets("markdown", {
 		i(1, ""),
 		t("}{"),
 		i(2, "} "),
+	}),
+
+	ls.snippet("bm", {
+		t({ "\\begin{bmatrix}", "" }),
+		i(1, ""),
+		t({ "", "\\end{bmatrix}" }),
 	}),
 
 	ls.snippet("bgb", {
@@ -237,15 +249,24 @@ ls.add_snippets("markdown", {
 		t("\\cdot "),
 	}),
 
+	ls.snippet("vd", {
+		t("\\vdots "),
+	}),
+
 	ls.snippet("ts", {
 		t("\\times "),
 	}),
+
 	ls.snippet("ot", {
 		t("\\otimes "),
 	}),
 
 	ls.snippet("pt", {
 		t("\\partial "),
+	}),
+
+	ls.snippet("tf", {
+		t("\\therefore "),
 	}),
 
 	-- Arrows
@@ -280,6 +301,12 @@ ls.add_snippets("markdown", {
 		t("\\xLeftrightarrow{"),
 		i(1, ""),
 		t("} "),
+	}),
+
+	ls.snippet("vc", {
+		t("\\vec{\\pmb{"),
+		i(1, ""),
+		t("}} "),
 	}),
 })
 

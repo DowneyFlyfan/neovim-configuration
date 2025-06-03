@@ -58,12 +58,6 @@ require("lazy").setup({
 		end,
 	},
 
-	-- Comment Plugins
-	{
-		"numToStr/Comment.nvim",
-		opts = {},
-	},
-
 	-- Formatter
 	{
 		"stevearc/conform.nvim",
@@ -110,7 +104,6 @@ require("lazy").setup({
 	},
 
 	{
-		"neovim/nvim-lspconfig",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
 
@@ -166,13 +159,6 @@ require("lazy").setup({
 		config = function()
 			require("config.lualine")
 		end,
-	},
-
-	-- parenthesis completion
-	{
-		"windwp/nvim-autopairs",
-		event = "insertenter",
-		config = true,
 	},
 
 	-- Markdown related
@@ -254,17 +240,31 @@ require("lazy").setup({
 		end,
 	},
 
+	-- mini series
+	{
+		"echasnovski/mini.nvim",
+		version = false,
+		config = function()
+			require("config.mini")
+		end,
+	},
+
 	-- ai engine
 	{
 		"yetone/avante.nvim",
 		event = "VeryLazy",
 		version = false, -- Never set this value to "*"! Never!
 		opts = {
-			provider = "gemini",
-			gemini = {
-				api_key_name = "GEMINI_API_KEY",
-				model = "gemini-2.5-flash-preview-04-17",
-				-- model = "gemini-2.5-pro-exp-03-25",
+			providers = {
+				deepseek = {
+					model = "deepseek-chat",
+					api_key_name = "DEEPSEEK_API_KEY",
+				},
+				gemini = {
+					api_key_name = "GEMINI_API_KEY",
+					model = "gemini-2.5-flash-preview-04-17",
+					-- model = "gemini-2.5-pro-exp-03-25",
+				},
 			},
 			windows = {
 				position = "smart",
