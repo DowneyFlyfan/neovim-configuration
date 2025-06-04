@@ -96,10 +96,6 @@ This is not an exhaustive list, but highlights some important custom bindings:
 *   **Markmap:** `<Space>o`: Open Markmap for current Markdown file.
 *   **CodeCompanion:** Custom prompts accessible via CodeCompanion commands/picker (check `Archive/codecompanion.lua` for prompt details).
 
-## Demo
-
-[Watch the Demo Video](REPLACE_WITH_VIDEO_URL)
-
 ## Configuration Structure
 
 *   `init.lua`: Entry point, loads core modules.
