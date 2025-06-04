@@ -87,7 +87,6 @@ require("lazy").setup({
 			ensure_installed = {
 				"pyright",
 				"lua_ls",
-				"clangd",
 				"ts_ls",
 				"html",
 				"texlab",
@@ -95,6 +94,7 @@ require("lazy").setup({
 				"verible",
 				"matlab_ls",
 				"marksman",
+				vim.fn.has("mac") and "clangd" or nil,
 			},
 		},
 		dependencies = {
