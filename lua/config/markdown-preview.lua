@@ -54,12 +54,9 @@ vim.g.mkdp_port = ""
 vim.g.mkdp_page_title = "「${name}」"
 
 -- 使用自定义的图像位置
-vim.g.mkdp_images_path = "/home/user/.markdown_images"
+-- vim.g.mkdp_images_path = "/home/user/.markdown_images"
 
--- 识别的文件类型
 vim.g.mkdp_filetypes = { "markdown" }
-
--- 设置默认主题（'dark' 或 'light'）
 vim.g.mkdp_theme = "light"
 
 -- 合并预览窗口

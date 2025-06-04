@@ -255,6 +255,7 @@ require("lazy").setup({
 		event = "VeryLazy",
 		version = false, -- Never set this value to "*"! Never!
 		opts = {
+			provider = "gemini",
 			providers = {
 				deepseek = {
 					model = "deepseek-chat",
@@ -263,12 +264,15 @@ require("lazy").setup({
 				gemini = {
 					api_key_name = "GEMINI_API_KEY",
 					model = "gemini-2.5-flash-preview-04-17",
-					-- model = "gemini-2.5-pro-exp-03-25",
 				},
 			},
 			windows = {
 				position = "smart",
 				width = 38,
+			},
+			web_search_engine = {
+				provider = "google",
+				proxy = "https://127.0.0.1:7890",
 			},
 		},
 
