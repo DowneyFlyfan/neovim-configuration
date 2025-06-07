@@ -7,7 +7,7 @@ vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { noremap = true, silent = t
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { noremap = true, silent = true })
 vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, { noremap = true, silent = true })
 
-on_attach = function(client, bufnr) -- Remove local
+on_attach = function(client, bufnr)
 	require("lsp_signature").on_attach({
 		bind = true,
 		hint_enable = true,
@@ -71,11 +71,11 @@ require("mason-tool-installer").setup({
 	ensure_installed = {
 		"ast_grep",
 		"black",
-		"rustfmt",
 		"prettier",
 		"prettierd",
 		"stylua",
 		"tex-fmt",
+		"rust",
 	},
 
 	auto_update = false,

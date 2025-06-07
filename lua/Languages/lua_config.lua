@@ -1,5 +1,5 @@
 -- LSP config for luals
-vim.lsp.config["luals"] = {
+vim.lsp.config["lua_ls"] = {
 	on_attach = on_attach,
 	capabilities = capabilities,
 	cmd = { "lua-language-server" }, -- Ensure lua-language-server is installed

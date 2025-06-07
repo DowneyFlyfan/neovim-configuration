@@ -94,7 +94,7 @@ require("lazy").setup({
 				"verible",
 				"matlab_ls",
 				"marksman",
-				vim.fn.has("mac") and "clangd" or nil,
+				"clangd",
 			},
 		},
 		dependencies = {
