@@ -26,7 +26,6 @@ vim.lsp.config["clangd"] = {
 	on_attach = on_attach,
 	capabilities = capabilities,
 	cmd = vim.fn.has("mac") and { "/opt/homebrew/opt/llvm/bin/clangd" } or { "/usr/bin/clangd-20" },
-	filetypes = { "c", "cpp", "cc", "h", "cuh", "cuda" },
 	flags = { debounce_text_changes = 150 },
 }
 
