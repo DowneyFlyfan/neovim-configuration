@@ -41,5 +41,6 @@ dap.configurations.python = {
 		request = "launch",
 		name = "Launch file",
 		program = "${file}",
+		cwd = vim.fn.expand("%:p:h"),
 	},
 }

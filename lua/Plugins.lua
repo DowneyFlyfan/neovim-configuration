@@ -201,6 +201,31 @@ require("lazy").setup({
 		ft = { "markdown" },
 	},
 
+	{
+		"epwalsh/obsidian.nvim",
+		version = "*", -- recommended, use latest release instead of latest commit
+		lazy = true,
+		event = {
+			"BufReadPre /users/downeyflyfan/library/mobile documents/icloud~md~obsidian/documents/**/*.md",
+			"BufNewFile /Users/downeyflyfan/Library/Mobile Documents/iCloud~md~obsidian/Documents/**/*.md",
+		},
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		opts = {
+			workspaces = {
+				{
+					name = "personal",
+					path = "/Users/downeyflyfan/Library/Mobile Documents/iCloud~md~obsidian/Documents/All",
+				},
+				{
+					name = "work",
+					path = "/Users/downeyflyfan/Library/Mobile Documents/iCloud~md~obsidian/Documents/All",
+				},
+			},
+		},
+	},
+
 	-- tex
 	{
 		"lervag/vimtex",
@@ -257,13 +282,10 @@ require("lazy").setup({
 		opts = {
 			provider = "gemini",
 			providers = {
-				deepseek = {
-					model = "deepseek-chat",
-					api_key_name = "DEEPSEEK_API_KEY",
-				},
 				gemini = {
 					api_key_name = "GEMINI_API_KEY",
-					model = "gemini-2.5-flash-preview-04-17",
+					-- model = "gemini-2.5-pro",
+					model = "gemini-2.5-flash",
 				},
 			},
 			windows = {

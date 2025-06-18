@@ -78,10 +78,10 @@ require("mason-tool-installer").setup({
 		"rust",
 	},
 
-	auto_update = false,
+	auto_update = true,
 	run_on_start = true,
-	start_delay = 3000,
-	debounce_hours = 5, -- at least 5 hours between attempts to install/update
+	start_delay = 500,
+	debounce_hours = 5,
 	integrations = {
 		["mason-lspconfig"] = true,
 		["mason-nvim-dap"] = true,

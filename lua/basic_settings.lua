@@ -4,6 +4,7 @@ vim.o.background = "light" -- Light color scheme
 vim.o.scrolloff = 5 -- Keep 5 lines above/below cursor
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+vim.opt.conceallevel = 2
 
 -- Terminal Mode Shortcuts
 vim.api.nvim_set_keymap("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
@@ -119,7 +120,8 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 function _G.run_aider_in_terminal()
 	vim.cmd("vsplit | terminal")
 	vim.defer_fn(function()
-		vim.api.nvim_input("aaider<CR>")
+		vim.api.nvim_input("aconda deactivate<CR>")
+		vim.api.nvim_input("aider<CR>")
 	end, 700)
 	vim.defer_fn(function()
 		vim.cmd("q")
