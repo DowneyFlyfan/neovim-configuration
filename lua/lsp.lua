@@ -76,6 +76,7 @@ require("mason-tool-installer").setup({
 		"stylua",
 		"tex-fmt",
 		"rust",
+		"clang-format",
 	},
 
 	auto_update = true,

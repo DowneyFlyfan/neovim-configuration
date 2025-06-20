@@ -13,6 +13,8 @@ require("nvim-treesitter.configs").setup({
 		"matlab",
 		"verilog",
 		"bash",
+		"json",
+		"rust",
 	},
 	sync_install = false,
 	auto_install = true,

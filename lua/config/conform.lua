@@ -17,7 +17,7 @@ require("conform").setup({
 		ksh = { "beautysh" },
 		csh = { "beautysh" },
 
-		c = { "ast_grep" },
+		c = { "clang-format" },
 	},
 })
 

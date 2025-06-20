@@ -50,6 +50,15 @@ require("lazy").setup({
 		end,
 	},
 
+	-- todo-comments
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("config.todo-comments")
+		end,
+	},
+
 	-- themes
 	{
 		"morhetz/gruvbox",
@@ -130,6 +139,13 @@ require("lazy").setup({
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
 			require("config.treesitter")
+		end,
+	},
+
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		config = function()
+			require("config.treesitter-context")
 		end,
 	},
 

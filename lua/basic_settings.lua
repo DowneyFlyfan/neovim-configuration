@@ -116,7 +116,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 	end,
 })
 
--- Aider Shortcuts
+-- AI Shortcuts
 function _G.run_aider_in_terminal()
 	vim.cmd("vsplit | terminal")
 	vim.defer_fn(function()
@@ -128,6 +128,7 @@ function _G.run_aider_in_terminal()
 	end, 800)
 end
 vim.api.nvim_set_keymap("n", "<D-k>", "<cmd>lua run_aider_in_terminal()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<D-c>", ":AvanteClear<CR>", { noremap = true, silent = true })
 
 -- Debugging
 -- vim.lsp.set_log_level("INFO")
