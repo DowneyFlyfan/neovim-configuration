@@ -77,6 +77,7 @@ require("mason-tool-installer").setup({
 		"tex-fmt",
 		"rust",
 		"clang-format",
+		"beautysh",
 	},
 
 	auto_update = true,

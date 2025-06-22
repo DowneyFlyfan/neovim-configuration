@@ -25,7 +25,8 @@ vim.lsp.enable("clangd")
 vim.lsp.config["clangd"] = {
 	on_attach = on_attach,
 	capabilities = capabilities,
-	cmd = vim.fn.has("mac") and { "/opt/homebrew/opt/llvm/bin/clangd" } or { "/usr/bin/clangd-20" },
+	cmd = vim.fn.has("mac") and { "/opt/homebrew/opt/llvm/bin/clangd", "--background-index" }
+		or { "/usr/bin/clangd-20", "--background-index" },
 	flags = { debounce_text_changes = 150 },
 }
 

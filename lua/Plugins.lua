@@ -16,6 +16,31 @@ require("lazy").setup({
 	-- multi-line operations
 	{
 		"terryma/vim-multiple-cursors",
+		enabled = false,
+	},
+
+	{
+		"mg979/vim-visual-multi",
+		branch = "master", -- Or 'main' depending on the plugin's default branch
+		keys = {
+			{
+				"<C-n>",
+				function()
+					require("visual-multi").setup()
+				end,
+				mode = { "n", "v" },
+				desc = "Start Multi-Cursor",
+			},
+		},
+		config = function()
+			vim.g.VM_maps = {
+				["Find Under"] = "<C-n>", -- 查找并添加下一个匹配
+				["Find All"] = "<C-a>", -- 查找所有匹配
+				["Remove Last"] = "<C-b>", -- 移除最后一个光标
+				["Start Mediate"] = "<C-m>", -- 开始中间模式
+				-- etc.
+			}
+		end,
 	},
 
 	-- vscode-like pictograms
@@ -311,6 +336,13 @@ require("lazy").setup({
 			web_search_engine = {
 				provider = "google",
 				proxy = "https://127.0.0.1:7890",
+			},
+			ask = {
+				floating = true,
+				start_insert = false,
+				border = "rounded",
+				---@type "ours" | "theirs"
+				focus_on_apply = "ours", -- which diff to focus after applying
 			},
 		},
 
