@@ -16,7 +16,7 @@ require("lazy").setup({
 	-- multi-line operations
 	{
 		"terryma/vim-multiple-cursors",
-		enabled = false,
+		enabled = true,
 	},
 
 	{
@@ -41,6 +41,7 @@ require("lazy").setup({
 				-- etc.
 			}
 		end,
+		enabled = false,
 	},
 
 	-- vscode-like pictograms

@@ -59,10 +59,10 @@ vim.api.nvim_set_keymap("n", "<Right>", ":vertical resize -3<CR>", { noremap = t
 vim.api.nvim_set_keymap("n", "<Left>", ":vertical resize +3<CR>", { noremap = true, silent = true })
 
 -- Cursor Movement
-vim.api.nvim_set_keymap("n", "H", "^", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "H", "5h", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "J", "5j", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "K", "5k", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "L", "$", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "L", "5l", { noremap = true, silent = true })
 
 -- Visual Mode Movement
 vim.api.nvim_set_keymap("v", "J", "5j", { noremap = true, silent = true })
