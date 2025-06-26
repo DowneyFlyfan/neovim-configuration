@@ -32,6 +32,9 @@ require("nvim-treesitter.configs").setup({
 		end,
 		additional_vim_regex_highlighting = { "latex" },
 	},
+
+	indent = { enable = true },
+	matchup = { enable = true },
 })
 
 vim.opt.foldmethod = "expr"

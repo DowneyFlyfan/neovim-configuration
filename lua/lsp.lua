@@ -20,6 +20,23 @@ on_attach = function(client, bufnr)
 		},
 	}, bufnr)
 
+	vim.diagnostic.config({
+		signs = true,
+		virtual_text = true,
+		underline = true,
+		float = {
+			visible = true,
+			source = "if_many",
+			border = "rounded",
+			header = true,
+			prefix = "💡 ",
+		},
+		-- LSP诊断级别：1:Error, 2:Warning, 3:Info, 4:Hint
+		severity = {
+			min = vim.diagnostic.severity.ERROR,
+		},
+	}, bufnr)
+
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
@@ -45,20 +62,6 @@ on_attach = function(client, bufnr)
 		end,
 	})
 end
-
-vim.diagnostic.config({
-	signs = true,
-	virtual_text = true,
-	underline = true,
-
-	float = {
-		visible = true,
-		source = "if_many",
-		border = "rounded",
-		header = true,
-		prefix = "💡 ",
-	},
-})
 
 -- Little snippets
 

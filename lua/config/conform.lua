@@ -9,6 +9,7 @@ require("conform").setup({
 		javascript = { "prettierd", "prettier", stop_after_first = true },
 		tex = { "tex_fmt" },
 		verilog = { "verible" },
+		systemverilog = { "verible" },
 
 		-- sh series
 		sh = { "beautysh" },
