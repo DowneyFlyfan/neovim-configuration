@@ -1,5 +1,5 @@
 -- Mason Settings
-capabilities = vim.lsp.protocol.make_client_capabilities() -- Remove local
+capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, { noremap = true, silent = true })
@@ -37,6 +37,8 @@ on_attach = function(client, bufnr)
 		},
 	}, bufnr)
 
+	-- Add root_dir
+	root_dir = vim.fn.getcwd()
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)

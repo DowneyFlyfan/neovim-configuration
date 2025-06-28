@@ -126,10 +126,10 @@ require("lazy").setup({
 				"html",
 				"texlab",
 				"cssls",
-				"verible",
 				"matlab_ls",
 				"marksman",
 				"clangd",
+				"verible",
 			},
 		},
 		dependencies = {
