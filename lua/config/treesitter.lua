@@ -18,7 +18,6 @@ require("nvim-treesitter.configs").setup({
 	},
 	sync_install = false,
 	auto_install = true,
-
 	highlight = {
 		enable = true,
 		disable = function(lang, buf)
@@ -35,9 +34,23 @@ require("nvim-treesitter.configs").setup({
 
 	indent = { enable = true },
 	matchup = { enable = true },
+	rainbow = {
+		enable = true,
+		extended_mode = true,
+		max_file_lines = 1000,
+		colors = {
+			"#E06C75", -- red
+			"#98C379", -- green
+			"#E5C07B", -- yellow
+			"#61AFEF", -- blue
+			"#C678DD", -- purple
+			"#56B6C2", -- cyan
+		},
+	},
 })
 
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldenable = true
 vim.opt.foldlevelstart = 0
+

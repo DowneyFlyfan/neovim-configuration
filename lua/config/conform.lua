@@ -3,6 +3,15 @@ require("conform").setup({
 		timeout_ms = 500,
 		lsp_format = "fallback",
 	},
+
+	formatters = {
+		verible = {
+			command = "verible-verilog-format",
+			args = { "-" },
+			stdin = true,
+		},
+	},
+
 	formatters_by_ft = {
 		lua = { "stylua" },
 		python = { "black" },

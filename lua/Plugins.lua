@@ -90,6 +90,7 @@ require("lazy").setup({
 		"morhetz/gruvbox",
 		config = function()
 			vim.cmd("colorscheme gruvbox")
+			vim.api.nvim_set_hl(0, "MatchParen", { fg = "#000000", bg = "#DAA520", bold = true })
 		end,
 	},
 
@@ -160,12 +161,17 @@ require("lazy").setup({
 		end,
 	},
 
-	-- nvim-treesitter
+	-- nvim-treesitter & vim-matchup
 	{
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
 			require("config.treesitter")
 		end,
+	},
+
+	{
+		"andymass/vim-matchup",
+		event = "VimEnter",
 	},
 
 	{
@@ -324,7 +330,7 @@ require("lazy").setup({
 				return "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
 			else
 				local plugin_path = vim.fn.stdpath("data") .. "/lazy/avante.nvim"
-				vim.fn.system({"make", "-C", plugin_path})
+				vim.fn.system({ "make", "-C", plugin_path })
 			end
 		end,
 
