@@ -319,6 +319,15 @@ require("lazy").setup({
 	-- ai engine
 	{
 		"yetone/avante.nvim",
+		build = function()
+			if vim.fn.has("win32") == 1 then
+				return "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
+			else
+				local plugin_path = vim.fn.stdpath("data") .. "/lazy/avante.nvim"
+				vim.fn.system({"make", "-C", plugin_path})
+			end
+		end,
+
 		event = "VeryLazy",
 		version = false, -- Never set this value to "*"! Never!
 
@@ -327,7 +336,6 @@ require("lazy").setup({
 			providers = {
 				gemini = {
 					api_key_name = "GEMINI_API_KEY",
-					-- model = "gemini-2.5-pro",
 					model = "gemini-2.5-flash",
 				},
 			},
@@ -347,14 +355,6 @@ require("lazy").setup({
 				focus_on_apply = "ours", -- which diff to focus after applying
 			},
 		},
-
-		build = function()
-			if vim.fn.has("win32") == 1 then
-				return "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
-			else
-				return "make"
-			end
-		end,
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 			"stevearc/dressing.nvim",
