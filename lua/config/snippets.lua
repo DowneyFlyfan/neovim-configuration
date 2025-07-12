@@ -1,0 +1,320 @@
+local ls = require("luasnip")
+local s = ls.snippet
+local sn = ls.snippet_node
+local isn = ls.indent_snippet_node
+local t = ls.text_node
+local i = ls.insert_node
+local f = ls.function_node
+local c = ls.choice_node
+local d = ls.dynamic_node
+local r = ls.restore_node
+local events = require("luasnip.util.events")
+local ai = require("luasnip.nodes.absolute_indexer")
+local extras = require("luasnip.extras")
+local fmt = extras.fmt
+local m = extras.m
+local l = extras.l
+local postfix = require("luasnip.extras.postfix").postfix
+
+ls.add_snippets("matlab", {
+	ls.snippet("cm", {
+		t({ "%{", "" }),
+		i(1, "comment"), -- 插入节点1，用户输入
+		t({ "", "%}" }),
+	}),
+})
+
+ls.add_snippets("python", {
+	ls.snippet("def", {
+		t("def "),
+		i(1, "function_name"),
+		t("("),
+		i(2, "args"),
+		t("):"),
+		t("\n    "), -- 换行
+		i(3, "pass"),
+	}),
+	ls.snippet("cm", {
+		t("# ---- "),
+		i(1, "comment"), -- 插入节点1，用户输入
+		t(" ----"),
+	}),
+	ls.snippet("ep", {
+		t({ 'r"""', "" }),
+		i(1, "Explanation"), -- 插入节点1，用户输入
+		t({ "", '"""' }),
+	}),
+})
+
+-- Markdown Snippets
+ls.add_snippets("markdown", {
+	-- Brackets & Matrixs
+	ls.snippet("eq", {
+		t({ "$$", "\\begin{equation}", "\\begin{aligned}", "" }),
+		i(1, ""),
+		t({ "", "\\end{aligned}", "\\end{equation}", "$$" }),
+	}),
+
+	ls.snippet("gs", {
+		t({ "\\begin{cases}", "" }),
+		i(1, ""),
+		t({ "", "\\end{cases}" }),
+	}),
+
+	ls.snippet("f", {
+		t("\\frac{"),
+		i(1, ""),
+		t("}{"),
+		i(2, "} "),
+	}),
+
+	ls.snippet("df", {
+		t("\\dfrac{"),
+		i(1, ""),
+		t("}{"),
+		i(2, "} "),
+	}),
+
+	ls.snippet("bm", {
+		t({ "\\begin{bmatrix}", "" }),
+		i(1, ""),
+		t({ "", "\\end{bmatrix}" }),
+	}),
+
+	ls.snippet("bgb", {
+		t("\\big["),
+		i(1, ""),
+		t("\\big]"),
+	}),
+
+	ls.snippet("Bgb", {
+		t("\\Big["),
+		i(1, ""),
+		t("\\Big]"),
+	}),
+
+	ls.snippet("bgp", {
+		t("\\big\\{"),
+		i(1, ""),
+		t("\\big\\}"),
+	}),
+
+	ls.snippet("Bgp", {
+		t("\\Big\\{"),
+		i(1, ""),
+		t("\\Big\\}"),
+	}),
+
+	-- Decorations
+	ls.snippet("us", {
+		t("\\underset{"),
+		i(1, ""),
+		t("}{"),
+		i(2, "} "),
+	}),
+
+	ls.snippet("os", {
+		t("\\overset{"),
+		i(1, ""),
+		t("}{"),
+		i(2, "} "),
+	}),
+
+	ls.snippet("td", {
+		t("\\tilde{"),
+		i(1, ""),
+		t("} "),
+	}),
+
+	ls.snippet("wtd", {
+		t("\\widetilde{"),
+		i(1, ""),
+		t("} "),
+	}),
+
+	ls.snippet("ht", {
+		t("\\hat{"),
+		i(1, ""),
+		t("} "),
+	}),
+
+	ls.snippet("wht", {
+		t("\\widehat{"),
+		i(1, ""),
+		t("} "),
+	}),
+
+	-- Font Family
+	ls.snippet("mc", {
+		t("\\mathcal{"),
+		i(1, ""),
+		t("} "),
+	}),
+
+	ls.snippet("mbb", {
+		t("\\mathbb{"),
+		i(1, ""),
+		t("} "),
+	}),
+
+	ls.snippet("mbf", {
+		t("\\mathbf{"),
+		i(1, ""),
+		t("} "),
+	}),
+
+	ls.snippet("mit", {
+		t("\\mathit{"),
+		i(1, ""),
+		t("} "),
+	}),
+
+	ls.snippet("mfk", {
+		t("\\mathfrak{"),
+		i(1, ""),
+		t("} "),
+	}),
+
+	ls.snippet("mrm", {
+		t("\\mathrm{"),
+		i(1, ""),
+		t("} "),
+	}),
+
+	-- Greece Alphabet
+	ls.snippet("sg", {
+		t("\\sigma "),
+	}),
+
+	ls.snippet("tt", {
+		t("\\theta "),
+	}),
+
+	ls.snippet("Tt", {
+		t("\\Theta "),
+	}),
+
+	ls.snippet("vrp", {
+		t("\\varepsilon "),
+	}),
+
+	ls.snippet("ep", {
+		t("\\epsilon "),
+	}),
+
+	ls.snippet("", {
+		t("\\sigma "),
+	}),
+
+	ls.snippet("gm", {
+		t("\\gamma "),
+	}),
+
+	ls.snippet("Gm", {
+		t("\\Gamma "),
+	}),
+
+	ls.snippet("ap", {
+		t("\\alpha "),
+	}),
+
+	ls.snippet("bt", {
+		t("\\beta "),
+	}),
+
+	ls.snippet("nl", {
+		t("\\nabla "),
+	}),
+
+	ls.snippet("lbd", {
+		t("\\lambda "),
+	}),
+
+	-- Mathmatical Symbols
+	ls.snippet("sm", {
+		t("\\sum_{"),
+		i(1, ""),
+		t("}^{"),
+		i(2, "} "),
+	}),
+
+	ls.snippet("pd", {
+		t("\\prod_{"),
+		i(1, ""),
+		t("}^{"),
+		i(2, "} "),
+	}),
+
+	ls.snippet("cd", {
+		t("\\cdot "),
+	}),
+
+	ls.snippet("vd", {
+		t("\\vdots "),
+	}),
+
+	ls.snippet("ts", {
+		t("\\times "),
+	}),
+
+	ls.snippet("ot", {
+		t("\\otimes "),
+	}),
+
+	ls.snippet("pt", {
+		t("\\partial "),
+	}),
+
+	ls.snippet("tf", {
+		t("\\therefore "),
+	}),
+
+	-- Arrows
+	ls.snippet("ra", {
+		t("\\xrightarrow{"),
+		i(1, ""),
+		t("} "),
+	}),
+	ls.snippet("Ra", {
+		t("\\xRightarrow{"),
+		i(1, ""),
+		t("} "),
+	}),
+
+	ls.snippet("la", {
+		t("\\xleftarrow{"),
+		i(1, ""),
+		t("} "),
+	}),
+	ls.snippet("La", {
+		t("\\xLeftarrow{"),
+		i(1, ""),
+		t("} "),
+	}),
+
+	ls.snippet("ar", {
+		t("\\xleftrightarrow{"),
+		i(1, ""),
+		t("} "),
+	}),
+	ls.snippet("Ar", {
+		t("\\xLeftrightarrow{"),
+		i(1, ""),
+		t("} "),
+	}),
+
+	ls.snippet("vc", {
+		t("\\vec{\\pmb{"),
+		i(1, ""),
+		t("}} "),
+	}),
+})
+
+-- JSX Snippets
+ls.add_snippets("javascriptreact", {
+	ls.snippet("cm", {
+		t("{/* "),
+		i(1, "comment"),
+		t(" */}"),
+	}),
+})
