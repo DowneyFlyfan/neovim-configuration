@@ -77,6 +77,7 @@ This repository contains my personal Neovim configuration. It's built using Lua 
     |---|---|
     | Neovim | Latest stable or nightly recommended. |
     | Ranger | For `UndoTree` |
+    | `ripgrep` | For `UndoTree` and `todo-comments` |
     | Git | |
     | Python | Specifically configured for Pyright and running Python files. |
     | Node.js, Tree-sitter-cli, Yarn | Required for `markdown-preview.nvim`, `nvim-treesitter`, `markmap.nvim`. Remember to `npm install -g tree-sitter-cli yarn`. |
