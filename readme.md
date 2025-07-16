@@ -2,8 +2,6 @@
 
 This repository contains my personal Neovim configuration. It's built using Lua and leverages `lazy.nvim` for plugin management. The setup is tailored for development in various languages including **Python, C/C++, CUDA, Lua, MATLAB, TeX, Verilog/SystemVerilog, Shell, Html, JavaScript and CSS**, incorporating **LSP, Treesitter debugging, Formatter, AI assistance and more**.
 
-## Note: Better Use this config on MacOS/Linux or WSL for Windows.
-
 ## Features
 
 | Category          | Feature/Item              | Description/Details                                                                                                                                                                             | Keybinding (Normal Mode) | Related Files/Config                               |
@@ -84,7 +82,6 @@ This repository contains my personal Neovim configuration. It's built using Lua 
     | `clangd` lsp | Install `llvm` and `nvim-treesitter` C parser. |
     | Debuggers | Optionally, install `cppdbg`, `bash-debug-adapter` if not managed by `mason-nvim-dap`. |
     | FZF | Installing `fzf` on your system|
-    | luajit | For compling `avante.nvim` |
     | Rust |`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \| source "$HOME/.cargo/env"`, for compling `avante.nvim`|
 
 
