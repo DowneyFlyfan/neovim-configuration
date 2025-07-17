@@ -122,6 +122,7 @@ require("lazy").setup({
 		opts = {
 			ensure_installed = {
 				"pyright",
+				"bashls",
 				"lua_ls",
 				"ts_ls",
 				"html",

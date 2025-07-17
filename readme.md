@@ -2,6 +2,32 @@
 
 This repository contains my personal Neovim configuration. It's built using Lua and leverages `lazy.nvim` for plugin management. The setup is tailored for development in various languages including **Python, C/C++, CUDA, Lua, MATLAB, TeX, Verilog/SystemVerilog, Shell, Html, JavaScript and CSS**, incorporating **LSP, Treesitter debugging, Formatter, AI assistance and more**.
 
+## Installation
+
+1.  **Backup:** Backup your existing Neovim configuration (`~/.config/nvim`).
+2.  **Clone:** Clone this repository to `~/.config/nvim`:
+    ```bash
+    git clone https://github.com/DowneyFlyfan/neovim-configuration ~/.config/nvim
+    ```
+
+3.  **Dependencies:** Ensure you have the necessary external dependencies installed before using this configuration:
+
+    | Item | Description |
+    |---|---|
+    | Neovim | Latest stable or nightly recommended. |
+    | Ranger | For `UndoTree` |
+    | `ripgrep` | For `UndoTree` and `todo-comments` |
+    | Git | |
+    | Python | Specifically configured for Pyright and running Python files. |
+    | Node.js, Tree-sitter-cli, Yarn | Required for `markdown-preview.nvim`, `nvim-treesitter`, `markmap.nvim`. Remember to `npm install -g tree-sitter-cli yarn`. |
+    | `clangd` lsp | Install `llvm` and `nvim-treesitter` C parser. |
+    | Debuggers | Optionally, install `cppdbg`, `bash-debug-adapter` if not managed by `mason-nvim-dap`. |
+    | FZF | Installing `fzf` on your system|
+    | Rust |`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \| source "$HOME/.cargo/env"`, for compling `avante.nvim`|
+
+
+4. **Launch Neovim:** Open Neovim (`nvim`). `lazy.nvim` should automatically bootstrap itself and install all the plugins.
+
 ## Features
 
 | Category          | Feature/Item              | Description/Details                                                                                                                                                                             | Keybinding (Normal Mode) | Related Files/Config                               |
@@ -60,32 +86,6 @@ This repository contains my personal Neovim configuration. It's built using Lua 
 |                   | Cursor Line Highlighting  | Highlight the current cursor line.                                                                                                                                                      |                          | `lua/basic_settings.lua`                           |
 |                   | Persistent Undo           | Persistent undo history. Plugin: [undotree](https://github.com/mbbill/undotree).                                                                                                      | `UD`                     |                                                    |
 |                   | Auto Pair Completion      | Automatic parenthesis/pair completion. Plugin: [mini.nvim](https://github.com/echasnovsk/mini.nvim).                                                                                  |                          |                                                    |
- 
-## Installation
-
-1.  **Backup:** Backup your existing Neovim configuration (`~/.config/nvim`).
-2.  **Clone:** Clone this repository to `~/.config/nvim`:
-    ```bash
-    git clone https://github.com/DowneyFlyfan/neovim-configuration ~/.config/nvim
-    ```
-
-3.  **Dependencies:** Ensure you have the necessary external dependencies installed before using this configuration:
-
-    | Item | Description |
-    |---|---|
-    | Neovim | Latest stable or nightly recommended. |
-    | Ranger | For `UndoTree` |
-    | `ripgrep` | For `UndoTree` and `todo-comments` |
-    | Git | |
-    | Python | Specifically configured for Pyright and running Python files. |
-    | Node.js, Tree-sitter-cli, Yarn | Required for `markdown-preview.nvim`, `nvim-treesitter`, `markmap.nvim`. Remember to `npm install -g tree-sitter-cli yarn`. |
-    | `clangd` lsp | Install `llvm` and `nvim-treesitter` C parser. |
-    | Debuggers | Optionally, install `cppdbg`, `bash-debug-adapter` if not managed by `mason-nvim-dap`. |
-    | FZF | Installing `fzf` on your system|
-    | Rust |`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \| source "$HOME/.cargo/env"`, for compling `avante.nvim`|
-
-
-4. **Launch Neovim:** Open Neovim (`nvim`). `lazy.nvim` should automatically bootstrap itself and install all the plugins.
 
 ## Keybindings
 
