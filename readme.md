@@ -10,7 +10,7 @@ This repository contains my personal Neovim configuration. It's built using Lua 
     git clone https://github.com/DowneyFlyfan/neovim-configuration ~/.config/nvim
     ```
 
-3.  **Dependencies:** Ensure you have the necessary external dependencies installed before using this configuration:
+3.  **Plugins Dependencies:** Ensure you have the necessary external dependencies installed before using this configuration:
 
     | Item | Description |
     |---|---|
@@ -18,15 +18,20 @@ This repository contains my personal Neovim configuration. It's built using Lua 
     | Ranger | For `UndoTree` |
     | `ripgrep` | For `UndoTree` and `todo-comments` |
     | Git | |
-    | Python | Specifically configured for Pyright and running Python files. |
     | Node.js, Tree-sitter-cli, Yarn | Required for `markdown-preview.nvim`, `nvim-treesitter`, `markmap.nvim`. Remember to `npm install -g tree-sitter-cli yarn`. |
-    | `clangd` lsp | Install `llvm` and `nvim-treesitter` C parser. |
     | Debuggers | Optionally, install `cppdbg`, `bash-debug-adapter` if not managed by `mason-nvim-dap`. |
-    | FZF | Installing `fzf` on your system|
+    |fzf | Installing `fzf` on your system|
     | Rust |`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \| source "$HOME/.cargo/env"`, for compling `avante.nvim`|
 
 
-4. **Launch Neovim:** Open Neovim (`nvim`). `lazy.nvim` should automatically bootstrap itself and install all the plugins.
+4. Lsp Dependencies
+
+    | Item | Description |
+    |---|---|
+    | Python | Specifically configured for Pyright and running Python files. |
+    | `clangd` | Install `llvm` and `nvim-treesitter` C parser. |
+
+5. **Launch Neovim:** Open Neovim (`nvim`). `lazy.nvim` should automatically bootstrap itself and install all the plugins.
 
 ## Features
 

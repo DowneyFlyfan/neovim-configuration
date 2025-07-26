@@ -130,8 +130,8 @@ require("lazy").setup({
 				"cssls",
 				"matlab_ls",
 				"marksman",
+				"svlangserver",
 				"clangd",
-				"svls",
 			},
 		},
 		dependencies = {
