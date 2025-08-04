@@ -261,6 +261,10 @@ ls.add_snippets("markdown", {
 		t("\\otimes "),
 	}),
 
+	ls.snippet("op", {
+		t("\\oplus"),
+	}),
+
 	ls.snippet("pt", {
 		t("\\partial "),
 	}),

@@ -15,6 +15,7 @@ require("nvim-treesitter.configs").setup({
 		"bash",
 		"json",
 		"rust",
+		"csv",
 	},
 	sync_install = false,
 	auto_install = true,

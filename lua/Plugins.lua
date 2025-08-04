@@ -13,35 +13,17 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	-- multi-line operations
-	{
-		"terryma/vim-multiple-cursors",
-		enabled = true,
-	},
-
 	{
 		"mg979/vim-visual-multi",
-		branch = "master", -- Or 'main' depending on the plugin's default branch
-		keys = {
-			{
-				"<C-n>",
-				function()
-					require("visual-multi").setup()
-				end,
-				mode = { "n", "v" },
-				desc = "Start Multi-Cursor",
-			},
-		},
+		branch = "master",
 		config = function()
 			vim.g.VM_maps = {
-				["Find Under"] = "<C-n>", -- 查找并添加下一个匹配
-				["Find All"] = "<C-a>", -- 查找所有匹配
-				["Remove Last"] = "<C-b>", -- 移除最后一个光标
-				["Start Mediate"] = "<C-m>", -- 开始中间模式
-				-- etc.
+				["Find Under"] = "<C-n>",
+				["Add Cursor Up"] = "<M-k>",
+				["Add Cursor Down"] = "<M-j>",
 			}
 		end,
-		enabled = false,
+		enabled = true,
 	},
 
 	-- vscode-like pictograms
@@ -132,6 +114,7 @@ require("lazy").setup({
 				"marksman",
 				"svlangserver",
 				"clangd",
+				"rust_analyzer",
 			},
 		},
 		dependencies = {

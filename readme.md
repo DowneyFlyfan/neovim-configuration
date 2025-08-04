@@ -1,6 +1,6 @@
 # My Neovim Configuration
 
-This repository contains my personal Neovim configuration. It's built using Lua and leverages `lazy.nvim` for plugin management. The setup is tailored for development in various languages including **Python, C/C++, CUDA, Lua, MATLAB, TeX, Verilog/SystemVerilog, Shell, Html, JavaScript and CSS**, incorporating **LSP, Treesitter debugging, Formatter, AI assistance and more**.
+This repository contains my personal Neovim configuration. It's built using Lua and leverages `lazy.nvim` for plugin management. The setup is tailored for development in various languages including **Python, C/C++, Rust, CUDA, Lua, MATLAB, TeX, Verilog/SystemVerilog, Shell, Html, JavaScript and CSS**, incorporating **LSP, Treesitter debugging, Formatter, AI assistance and more**.
 
 ## Installation
 
