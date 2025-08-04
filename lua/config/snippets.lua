@@ -48,7 +48,7 @@ ls.add_snippets("python", {
 
 -- Markdown Snippets
 ls.add_snippets("markdown", {
-	-- Brackets & Matrixs
+	-- Brackets & Matrixs & Integral
 	ls.snippet("eq", {
 		t({ "$$", "\\begin{equation}", "\\begin{aligned}", "" }),
 		i(1, ""),
@@ -59,6 +59,20 @@ ls.add_snippets("markdown", {
 		t({ "\\begin{cases}", "" }),
 		i(1, ""),
 		t({ "", "\\end{cases}" }),
+	}),
+
+	ls.snippet("it", {
+		t("\\int_{"),
+		i(1, ""),
+		t("}^{"),
+		i(2, "} "),
+	}),
+
+	ls.snippet("iit", {
+		t("\\iint_{"),
+		i(1, ""),
+		t("}^{"),
+		i(2, "} "),
 	}),
 
 	ls.snippet("f", {
@@ -184,6 +198,10 @@ ls.add_snippets("markdown", {
 	-- Greece Alphabet
 	ls.snippet("sg", {
 		t("\\sigma "),
+	}),
+
+	ls.snippet("om", {
+		t("\\omega "),
 	}),
 
 	ls.snippet("tt", {

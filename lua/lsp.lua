@@ -19,6 +19,7 @@ On_attach = function(_client, bufnr)
 		},
 	}, bufnr)
 
+	vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
@@ -60,6 +61,7 @@ require("mason-tool-installer").setup({
 		"verible",
 		"clang-format",
 		"beautysh",
+		"rustfmt",
 	},
 
 	auto_update = true,
