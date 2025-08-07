@@ -22,3 +22,11 @@ vim.lsp.config("rust_analyzer", {
 		},
 	},
 })
+
+--Shortcuts
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "rust",
+	callback = function()
+		vim.keymap.set("n", "<C-e>", ":w<CR>:!cargo run<CR>", { noremap = true, silent = true })
+	end,
+})

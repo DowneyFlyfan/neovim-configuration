@@ -75,6 +75,13 @@ ls.add_snippets("markdown", {
 		i(2, "} "),
 	}),
 
+	ls.snippet("pt", {
+		t("\\frac{\\partial "),
+		i(1, ""),
+		t("}{\\partial "),
+		i(2, "} "),
+	}),
+
 	ls.snippet("f", {
 		t("\\frac{"),
 		i(1, ""),
@@ -283,12 +290,12 @@ ls.add_snippets("markdown", {
 		t("\\oplus"),
 	}),
 
-	ls.snippet("pt", {
-		t("\\partial "),
-	}),
-
 	ls.snippet("tf", {
 		t("\\therefore "),
+	}),
+
+	ls.snippet("if", {
+		t("\\infty "),
 	}),
 
 	-- Arrows
@@ -329,6 +336,13 @@ ls.add_snippets("markdown", {
 		t("\\vec{\\pmb{"),
 		i(1, ""),
 		t("}} "),
+	}),
+
+	-- Others
+	ls.snippet("im", {
+		t("![]("),
+		i(1, ""),
+		t(")"),
 	}),
 })
 

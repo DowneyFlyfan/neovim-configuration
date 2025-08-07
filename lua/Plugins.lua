@@ -135,6 +135,9 @@ require("lazy").setup({
 	{
 		"jay-babu/mason-nvim-dap.nvim",
 		dependencies = { "mfussenegger/nvim-dap" },
+		config = function()
+			require("config.nvim-dap")
+		end,
 	},
 
 	{
