@@ -28,5 +28,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = "rust",
 	callback = function()
 		vim.keymap.set("n", "<C-e>", ":w<CR>:!cargo run<CR>", { noremap = true, silent = true })
+		vim.keymap.set("n", "<C-t>", ":w<CR>:!cargo test<CR>", { noremap = true, silent = true })
 	end,
 })

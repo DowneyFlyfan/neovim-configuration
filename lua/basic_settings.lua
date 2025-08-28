@@ -114,7 +114,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- AI Shortcuts
-vim.api.nvim_set_keymap("n", "<space>c", ":AvanteClear<CR>", { noremap = true, silent = true }) -- Windows equivalent: Alt-c or Windows-c
+vim.api.nvim_set_keymap("n", "<space>c", ":AvanteClear<CR>", { noremap = true, silent = true })
 
 -- Debugging
 -- vim.lsp.set_log_level("INFO")

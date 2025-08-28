@@ -247,6 +247,10 @@ ls.add_snippets("markdown", {
 		t("\\beta "),
 	}),
 
+	ls.snippet("kp", {
+		t("\\kappa "),
+	}),
+
 	ls.snippet("nl", {
 		t("\\nabla "),
 	}),
@@ -340,7 +344,7 @@ ls.add_snippets("markdown", {
 
 	-- Others
 	ls.snippet("im", {
-		t("![]("),
+		t("![](./imgs/"),
 		i(1, ""),
 		t(")"),
 	}),

@@ -16,6 +16,7 @@ require("nvim-treesitter.configs").setup({
 		"json",
 		"rust",
 		"csv",
+		"asm",
 	},
 	sync_install = false,
 	auto_install = true,
