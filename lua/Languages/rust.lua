@@ -19,6 +19,12 @@ vim.lsp.config("rust_analyzer", {
 			procMacro = {
 				enable = true,
 			},
+
+			completion = {
+				autoimport = {
+					enable = false,
+				},
+			},
 		},
 	},
 })
