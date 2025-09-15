@@ -5,6 +5,14 @@ vim.keymap.set("n", "<M-i>", ":lua require'dap'.step_into()<CR>", { noremap = tr
 vim.keymap.set("n", "<M-o>", ":lua require'dap'.step_over()<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<M-b>", ":lua require'dap'.toggle_breakpoint()<CR>", { noremap = true, silent = true })
 
+-- Project Root
+local project_root = vim.fs.find(".git", { upward = true, stop = vim.env.HOME })[1]
+if project_root then
+	project_root = vim.fn.fnamemodify(project_root, ":h")
+else
+	project_root = vim.fn.expand("%:p:h")
+end
+
 -- Python
 dap.adapters.python = {
 	type = "executable",
@@ -18,7 +26,7 @@ dap.configurations.python = {
 		request = "launch",
 		name = "Launch file",
 		program = "${file}",
-		cwd = vim.fn.expand("%:p:h"),
+		cwd = project_root,
 	},
 }
 

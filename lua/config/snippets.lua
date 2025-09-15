@@ -207,6 +207,10 @@ ls.add_snippets("markdown", {
 		t("\\sigma "),
 	}),
 
+	ls.snippet("te", {
+		t("\\triangleq "),
+	}),
+
 	ls.snippet("om", {
 		t("\\omega "),
 	}),
@@ -227,8 +231,12 @@ ls.add_snippets("markdown", {
 		t("\\epsilon "),
 	}),
 
-	ls.snippet("", {
-		t("\\sigma "),
+	ls.snippet("dt", {
+		t("\\delta "),
+	}),
+
+	ls.snippet("Dt", {
+		t("\\Delta "),
 	}),
 
 	ls.snippet("gm", {
