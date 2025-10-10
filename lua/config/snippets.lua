@@ -103,27 +103,27 @@ ls.add_snippets("markdown", {
 	}),
 
 	ls.snippet("bgb", {
-		t("\\big["),
+		t("\\big[ "),
 		i(1, ""),
-		t("\\big]"),
+		t(" \\big]"),
 	}),
 
 	ls.snippet("Bgb", {
-		t("\\Big["),
+		t("\\Big[ "),
 		i(1, ""),
-		t("\\Big]"),
+		t(" \\Big]"),
 	}),
 
 	ls.snippet("bgp", {
-		t("\\big\\{"),
+		t("\\big\\{ "),
 		i(1, ""),
-		t("\\big\\}"),
+		t(" \\big\\}"),
 	}),
 
 	ls.snippet("Bgp", {
-		t("\\Big\\{"),
+		t("\\Big\\{ "),
 		i(1, ""),
-		t("\\Big\\}"),
+		t(" \\Big\\}"),
 	}),
 
 	-- Decorations
@@ -209,6 +209,10 @@ ls.add_snippets("markdown", {
 
 	ls.snippet("te", {
 		t("\\triangleq "),
+	}),
+
+	ls.snippet("Om", {
+		t("\\Omega "),
 	}),
 
 	ls.snippet("om", {
@@ -310,6 +314,10 @@ ls.add_snippets("markdown", {
 		t("\\infty "),
 	}),
 
+	ls.snippet("id", {
+		t("\\perp \\! \\! \\! \\perp "),
+	}),
+
 	-- Arrows
 	ls.snippet("ra", {
 		t("\\xrightarrow{"),
@@ -342,6 +350,14 @@ ls.add_snippets("markdown", {
 		t("\\xLeftrightarrow{"),
 		i(1, ""),
 		t("} "),
+	}),
+
+	ls.snippet("da", {
+		t("\\downarrow "),
+	}),
+
+	ls.snippet("upa", {
+		t("\\uparrow "),
 	}),
 
 	ls.snippet("vc", {
