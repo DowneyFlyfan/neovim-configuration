@@ -96,6 +96,10 @@ ls.add_snippets("markdown", {
 		i(2, "} "),
 	}),
 
+	ls.snippet("ax", {
+		t("\\approx "),
+	}),
+
 	ls.snippet("bm", {
 		t({ "\\begin{bmatrix}", "" }),
 		i(1, ""),
