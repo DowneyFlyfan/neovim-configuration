@@ -23,7 +23,11 @@ require("lazy").setup({
 				["Add Cursor Down"] = "<M-j>",
 			}
 		end,
-		enabled = true,
+		enabled = false,
+	},
+
+	{
+		"terryma/vim-multiple-cursors",
 	},
 
 	-- vscode-like pictograms

@@ -163,6 +163,11 @@ ls.add_snippets("markdown", {
 		t("} "),
 	}),
 
+	ls.snippet("cc", {
+		t("\\circ"),
+		i(1, ""),
+	}),
+
 	ls.snippet("wht", {
 		t("\\widehat{"),
 		i(1, ""),
@@ -202,6 +207,12 @@ ls.add_snippets("markdown", {
 
 	ls.snippet("mrm", {
 		t("\\mathrm{"),
+		i(1, ""),
+		t("} "),
+	}),
+
+	ls.snippet("tx", {
+		t("\\text{"),
 		i(1, ""),
 		t("} "),
 	}),
@@ -281,6 +292,12 @@ ls.add_snippets("markdown", {
 		i(1, ""),
 		t("}^{"),
 		i(2, "} "),
+	}),
+
+	ls.snippet("sr", {
+		t("\\sqrt{"),
+		i(1, ""),
+		t("}"),
 	}),
 
 	ls.snippet("pd", {
