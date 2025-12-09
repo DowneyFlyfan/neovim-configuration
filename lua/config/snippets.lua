@@ -339,7 +339,7 @@ ls.add_snippets("markdown", {
 		t("\\perp \\! \\! \\! \\perp "),
 	}),
 
-	-- Arrows
+	-- Arrows, Comparator
 	ls.snippet("ra", {
 		t("\\xrightarrow{"),
 		i(1, ""),
@@ -379,6 +379,14 @@ ls.add_snippets("markdown", {
 
 	ls.snippet("upa", {
 		t("\\uparrow "),
+	}),
+
+	ls.snippet("ls", {
+		t("\\lesssim "),
+	}),
+
+	ls.snippet("gs", {
+		t("\\gtrsim"),
 	}),
 
 	ls.snippet("vc", {
