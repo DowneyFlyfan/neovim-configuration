@@ -119,6 +119,7 @@ require("lazy").setup({
 				"svlangserver",
 				"clangd",
 				"rust_analyzer",
+				"asm_lsp",
 			},
 		},
 		dependencies = {

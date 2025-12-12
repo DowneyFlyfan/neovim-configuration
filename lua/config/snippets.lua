@@ -55,7 +55,7 @@ ls.add_snippets("markdown", {
 		t({ "", "\\end{aligned}", "\\end{equation}", "$$" }),
 	}),
 
-	ls.snippet("gs", {
+	ls.snippet("cs", {
 		t({ "\\begin{cases}", "" }),
 		i(1, ""),
 		t({ "", "\\end{cases}" }),
