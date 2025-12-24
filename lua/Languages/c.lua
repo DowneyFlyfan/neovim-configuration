@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.lsp.config("clangd", {
 	on_attach = On_attach,
 	capabilities = Capabilities,
-	cmd = vim.fn.has("Darwin") and { "/opt/homebrew/opt/llvm/bin/clangd", "--background-index" }
+	cmd = (vim.fn.has("mac") == 1) and { "/opt/homebrew/opt/llvm/bin/clangd", "--background-index" }
 		or { "/usr/bin/clangd-20", "--background-index" },
 	flags = { debounce_text_changes = 150 },
 })

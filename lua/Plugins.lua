@@ -342,7 +342,7 @@ require("lazy").setup({
 			providers = {
 				gemini = {
 					api_key_name = "GEMINI_API_KEY",
-					model = "gemini-2.5-flash",
+					model = "gemini-3-flash-preview",
 				},
 			},
 			windows = {
