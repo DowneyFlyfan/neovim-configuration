@@ -136,6 +136,13 @@ require("lazy").setup({
 		"nvim-lua/plenary.nvim",
 	},
 
+	{
+		"mfussenegger/nvim-lint",
+		config = function()
+			require("config.lint")
+		end,
+	},
+
 	-- debug tools
 	{
 		"jay-babu/mason-nvim-dap.nvim",
