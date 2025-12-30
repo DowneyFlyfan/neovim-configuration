@@ -2,6 +2,12 @@
 
 require("mini.comment").setup({})
 
+require("mini.files").setup({})
+
+vim.keymap.set("n", "<Space>f", function()
+	MiniFiles.open()
+end, { desc = "Open mini.files" })
+
 require("mini.align").setup({})
 
 require("mini.move").setup({})
