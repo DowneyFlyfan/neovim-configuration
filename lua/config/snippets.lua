@@ -24,6 +24,14 @@ ls.add_snippets("matlab", {
 	}),
 })
 
+ls.add_snippets("sh", {
+	ls.snippet("cm", {
+		t("# ==== "),
+		i(1, "comment"), -- 插入节点1，用户输入
+		t(" ===="),
+	}),
+})
+
 ls.add_snippets("python", {
 	ls.snippet("def", {
 		t("def "),
