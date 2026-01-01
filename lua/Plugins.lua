@@ -170,11 +170,19 @@ require("lazy").setup({
 
 	{
 		"andymass/vim-matchup",
-		commit = "5456eaccf757606884ec1ac1ef3f564019973873", -- Pin to the commit for v0.7.4, which is known to be stable
 		init = function()
-			vim.g.matchup_matchparen_deferred = 1
 			vim.g.matchup_matchparen_hi_surround_always = 1
+			vim.g.matchup_matchparen_deferred = 1
 			vim.g.loaded_matchit = 1
+			vim.g.loaded_matchparen = 1
+		end,
+		config = function()
+			require("match-up").setup({
+				treesitter = {
+					enable = true,
+					include_match_words = true,
+				},
+			})
 		end,
 	},
 
