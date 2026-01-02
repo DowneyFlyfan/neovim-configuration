@@ -14,13 +14,13 @@ This repository contains my personal Neovim configuration. It's built using Lua 
 
     | Item | Description |
     |---|---|
-    | **Neovim** | Latest stable or nightly recommended (v0.10+). |
+    | **Neovim** | Latest stable or nightly recommended (v0.11+). |
     | **Git** | Required for plugin management. |
     | **Node.js, Yarn** | Required for `markdown-preview.nvim`, `markmap.nvim`, and various LSPs/Formatters. |
     | **Ripgrep** | Required for `fzf-lua`, `todo-comments`, and `gitsigns`. |
-    | **fd** | Recommended for `fzf-lua`. |
+    | **fzf** | Required for `fzf-lua`. |
     | **Python 3** | Required for Python development and some plugins. |
-    | **Rust** | Required for compiling `avante.nvim` (if building from source). |
+    | **Rust**, **cargo** | Required for compiling `avante.nvim`, `asm_lsp` |
     | **C/C++ Compiler** | `clang` or `gcc` for compiling Treesitter parsers. |
     | **runc** | Custom script/command expected for running C/C++ files (referenced in `lua/Languages/c.lua`). |
 
@@ -90,7 +90,7 @@ Leverages [mini.nvim](https://github.com/echasnovski/mini.nvim) modules for a co
 | `<Left>/<Right>` | Resize width |
 | `<Space>]` | Clear search highlights |
 | `UD` | Toggle UndoTree |
-| `<C-n>` | Find Under (Visual Multi - *Disabled/Configured*) |
+| `<C-n>` | Find Under (Visual Multi) |
 
 ### LSP & Diagnostics
 | Key | Description |

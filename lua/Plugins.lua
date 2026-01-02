@@ -127,7 +127,7 @@ require("lazy").setup({
 		config = function()
 			require("config.lint")
 		end,
-		enabled = false,
+		enabled = treesitter,
 	},
 
 	-- [Treesitter & Syntax]
@@ -175,18 +175,22 @@ require("lazy").setup({
 			vim.keymap.set("n", "UD", vim.cmd.UndotreeToggle)
 		end,
 	},
-	{ "terryma/vim-multiple-cursors" }, -- Basic multi-cursors
+	{ "terryma/vim-multiple-cursors", enabled = false }, -- Basic multi-cursors
+
 	{
-		"mg979/vim-visual-multi", -- Advanced multi-cursors
+		"mg979/vim-visual-multi",
 		branch = "master",
-		config = function()
+		-- 注意：使用 init 而不是 config
+		init = function()
 			vim.g.VM_maps = {
 				["Find Under"] = "<C-n>",
-				["Add Cursor Up"] = "<M-k>",
-				["Add Cursor Down"] = "<M-j>",
+				["Add Cursor Up"] = "<C-k>",
+				["Add Cursor Down"] = "<C-j>",
 			}
+			-- 建议：如果你希望 J/K 在多光标模式下也能移动 5 行，可能需要禁用 VM 对 J 的默认映射
+			-- vim.g.VM_maps["Join Lines"] = ""
 		end,
-		enabled = false,
+		enabled = true,
 	},
 
 	-- [Git]
