@@ -15,15 +15,17 @@ require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
 		python = { "black" },
-		asm = { "asmfmt" },
-		nasm = { "asmfmt" },
-		s = { "asmfmt" },
 		javascript = { "prettierd", "prettier", stop_after_first = true },
 		tex = { "tex_fmt" },
 		verilog = { "verible" },
 		systemverilog = { "verible" },
 
-		-- sh series
+		-- Assembly
+		-- nasm = { "" },
+		-- asm = { "" },
+		-- s = { "" },
+
+		-- shell
 		sh = { "beautysh" },
 		zsh = { "beautysh" },
 		bash = { "beautysh" },
