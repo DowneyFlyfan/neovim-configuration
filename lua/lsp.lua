@@ -5,7 +5,7 @@ local icons = {
 	info = "»",
 }
 
---  诊断配置 (全局样式)
+-- diagnostic
 vim.diagnostic.config({
 	virtual_text = {
 		prefix = "■",
@@ -29,7 +29,7 @@ vim.diagnostic.config({
 	},
 })
 
---  全局变量定义 (保持你原有的结构，但建议未来改为局部变量)
+-- Global Capabilities & On_attach
 _G.Capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 _G.On_attach = function(client, bufnr)
@@ -47,42 +47,39 @@ _G.On_attach = function(client, bufnr)
 
 	local opts = { noremap = true, silent = true, buffer = bufnr }
 
-	-- 跳转定义/声明
+	-- goto
 	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 	vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 
-	-- 悬停文档 (强制圆角边框，替代旧的全局 Handler 覆盖)
+	-- Hover Doc
 	vim.keymap.set("n", "<C-h>", function()
 		vim.lsp.buf.hover({ border = "rounded" })
 	end, opts)
 
-	-- 代码操作与重命名
+	-- Code Action & Rename
 	vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
 	vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, opts)
 	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
 
-	-- Workspace 文件夹管理
+	-- Workspace Directories
 	vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
 	vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
 	vim.keymap.set("n", "<space>wl", function()
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	end, opts)
 
-	-- 诊断跳转 (核心修复: goto_next/prev -> jump)
+	-- Diagnostic
 	vim.keymap.set("n", "[d", function()
 		vim.diagnostic.jump({ count = -1, float = true })
 	end, opts)
 	vim.keymap.set("n", "]d", function()
 		vim.diagnostic.jump({ count = 1, float = true })
 	end, opts)
-
-	-- 打开浮动诊断窗口
 	vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
-	vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
 
-	-- 5. 自动格式化
+	-- formatter
 	local format_group = vim.api.nvim_create_augroup("LspFormatting", { clear = false })
 	vim.api.nvim_clear_autocmds({ buffer = bufnr, group = format_group })
 	vim.api.nvim_create_autocmd("BufWritePre", {
@@ -99,7 +96,7 @@ _G.On_attach = function(client, bufnr)
 	})
 end
 
--- Mason 工具链配置
+-- Mason Tools
 require("mason-nvim-dap").setup({
 	ensure_installed = { "python", "cppdbg", "bash" },
 	automatic_installation = true,
@@ -130,7 +127,7 @@ require("mason-tool-installer").setup({
 	},
 })
 
--- 加载语言配置
+-- Languages Config Load
 local languages = {
 	"python",
 	"c",

@@ -90,7 +90,7 @@ Leverages [mini.nvim](https://github.com/echasnovski/mini.nvim) modules for a co
 | `<Left>/<Right>` | Resize width |
 | `<Space>]` | Clear search highlights |
 | `UD` | Toggle UndoTree |
-| `<C-n>` | Find Under (Visual Multi) |
+| `<C-k>`,`<C-j>` | Add Cursor Up/Down |
 
 ### LSP & Diagnostics
 | Key | Description |
