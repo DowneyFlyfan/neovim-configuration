@@ -18,6 +18,7 @@ require("nvim-treesitter.configs").setup({
 		"csv",
 		"asm",
 	},
+
 	sync_install = false,
 	auto_install = true,
 	highlight = {
