@@ -4,7 +4,7 @@ require("mini.comment").setup({})
 
 require("mini.files").setup({})
 
-vim.keymap.set("n", "<Space>f", function()
+vim.keymap.set("n", "<M-f>", function()
 	MiniFiles.open()
 end, { desc = "Open mini.files" })
 
