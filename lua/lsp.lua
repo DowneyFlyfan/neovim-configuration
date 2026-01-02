@@ -1,43 +1,96 @@
--- Mason Settings
-Capabilities = require("cmp_nvim_lsp").default_capabilities()
+local icons = {
+	error = "✘",
+	warn = "▲",
+	hint = "⚑",
+	info = "»",
+}
 
-vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, { noremap = true, silent = true })
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { noremap = true, silent = true })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { noremap = true, silent = true })
-vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, { noremap = true, silent = true })
+--  诊断配置 (全局样式)
+vim.diagnostic.config({
+	virtual_text = {
+		prefix = "■",
+		source = "if_many",
+		spacing = 2,
+	},
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = icons.error,
+			[vim.diagnostic.severity.WARN] = icons.warn,
+			[vim.diagnostic.severity.HINT] = icons.hint,
+			[vim.diagnostic.severity.INFO] = icons.info,
+		},
+	},
+	underline = true,
+	update_in_insert = false,
+	severity_sort = true,
+	float = {
+		border = "rounded",
+		source = "always",
+	},
+})
 
-On_attach = function(_client, bufnr)
+--  全局变量定义 (保持你原有的结构，但建议未来改为局部变量)
+_G.Capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+_G.On_attach = function(client, bufnr)
 	require("lsp_signature").on_attach({
 		bind = true,
 		hint_enable = true,
 		floating_window = true,
-		fix_pos = false,
-		hint_prefix = "🔍 ",
-		hi_parameter = "LspSignatureActiveParameter",
-		handler_opts = {
-			border = "rounded",
-		},
+		handler_opts = { border = "rounded" },
+		check_708 = true,
 	}, bufnr)
 
-	vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-	local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-	vim.keymap.set("n", "<C-h>", vim.lsp.buf.hover, bufopts)
-	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-	vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
-	vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+	if client.server_capabilities.inlayHintProvider then
+		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+	end
+
+	local opts = { noremap = true, silent = true, buffer = bufnr }
+
+	-- 跳转定义/声明
+	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+	vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+
+	-- 悬停文档 (强制圆角边框，替代旧的全局 Handler 覆盖)
+	vim.keymap.set("n", "<C-h>", function()
+		vim.lsp.buf.hover({ border = "rounded" })
+	end, opts)
+
+	-- 代码操作与重命名
+	vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
+	vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, opts)
+	vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
+
+	-- Workspace 文件夹管理
+	vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
+	vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
 	vim.keymap.set("n", "<space>wl", function()
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-	end, bufopts)
-	vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
-	vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
-	vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+	end, opts)
+
+	-- 诊断跳转 (核心修复: goto_next/prev -> jump)
+	vim.keymap.set("n", "[d", function()
+		vim.diagnostic.jump({ count = -1, float = true })
+	end, opts)
+	vim.keymap.set("n", "]d", function()
+		vim.diagnostic.jump({ count = 1, float = true })
+	end, opts)
+
+	-- 打开浮动诊断窗口
+	vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
+	vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
+
+	-- 5. 自动格式化
+	local format_group = vim.api.nvim_create_augroup("LspFormatting", { clear = false })
+	vim.api.nvim_clear_autocmds({ buffer = bufnr, group = format_group })
 	vim.api.nvim_create_autocmd("BufWritePre", {
-		pattern = "*",
+		buffer = bufnr,
+		group = format_group,
 		callback = function(args)
-			local filetype = vim.api.nvim_buf_get_option(args.buf, "filetype")
-			if filetype == "matlab" then
+			local ft = vim.bo[args.buf].filetype
+			if ft == "matlab" then
 				vim.lsp.buf.format({ bufnr = args.buf })
 			else
 				require("conform").format({ bufnr = args.buf })
@@ -46,9 +99,11 @@ On_attach = function(_client, bufnr)
 	})
 end
 
+-- Mason 工具链配置
 require("mason-nvim-dap").setup({
 	ensure_installed = { "python", "cppdbg", "bash" },
-	automatic_setup = true,
+	automatic_installation = true,
+	handlers = {},
 })
 
 require("mason-tool-installer").setup({
@@ -62,8 +117,9 @@ require("mason-tool-installer").setup({
 		"clang-format",
 		"beautysh",
 		"rustfmt",
+		"asmfmt",
+		"ast_grep",
 	},
-
 	auto_update = true,
 	run_on_start = true,
 	start_delay = 500,
@@ -74,15 +130,26 @@ require("mason-tool-installer").setup({
 	},
 })
 
-require("Languages.python")
-require("Languages.c")
-require("Languages.matlab")
-require("Languages.lua_config")
-require("Languages.typescript")
-require("Languages.css")
-require("Languages.html")
-require("Languages.tex")
-require("Languages.markdown")
-require("Languages.verilog")
-require("Languages.rust")
-require("Languages.asm")
+-- 加载语言配置
+local languages = {
+	"python",
+	"c",
+	"matlab",
+	"lua_config",
+	"typescript",
+	"css",
+	"html",
+	"tex",
+	"markdown",
+	"verilog",
+	"rust",
+	"asm",
+	"bash",
+}
+
+for _, lang in ipairs(languages) do
+	local ok, _ = pcall(require, "Languages." .. lang)
+	if not ok then
+		vim.notify("Language config not found: " .. lang, vim.log.levels.WARN)
+	end
+end
