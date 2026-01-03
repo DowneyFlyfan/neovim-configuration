@@ -65,10 +65,8 @@ local function nasm_format()
 	vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, new_lines)
 end
 
--- 创建命令
 vim.api.nvim_create_user_command("NasmFmt", nasm_format, {})
 
--- 自动保存格式化
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = { "*.nasm", "*.asm" },
 	callback = nasm_format,
