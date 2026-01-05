@@ -10,7 +10,7 @@ vim.diagnostic.config({
 	virtual_text = {
 		prefix = "■",
 		source = "if_many",
-		spacing = 2,
+		spacing = 1,
 	},
 	signs = {
 		text = {
