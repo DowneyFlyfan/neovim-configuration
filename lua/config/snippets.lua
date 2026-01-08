@@ -19,7 +19,7 @@ local postfix = require("luasnip.extras.postfix").postfix
 ls.add_snippets("matlab", {
 	ls.snippet("cm", {
 		t({ "%{", "" }),
-		i(1, "comment"), -- 插入节点1，用户输入
+		i(1, "comment"),
 		t({ "", "%}" }),
 	}),
 })
@@ -27,8 +27,16 @@ ls.add_snippets("matlab", {
 ls.add_snippets("sh", {
 	ls.snippet("cm", {
 		t("# ==== "),
-		i(1, "comment"), -- 插入节点1，用户输入
+		i(1, "comment"),
 		t(" ===="),
+	}),
+})
+
+ls.add_snippets("c", {
+	ls.snippet("cm", {
+		t("// ----"),
+		i(1, "comment"),
+		t(" ----"),
 	}),
 })
 
@@ -39,17 +47,17 @@ ls.add_snippets("python", {
 		t("("),
 		i(2, "args"),
 		t("):"),
-		t("\n    "), -- 换行
+		t("\n    "),
 		i(3, "pass"),
 	}),
 	ls.snippet("cm", {
 		t("# ---- "),
-		i(1, "comment"), -- 插入节点1，用户输入
+		i(1, "comment"),
 		t(" ----"),
 	}),
 	ls.snippet("ep", {
 		t({ 'r"""', "" }),
-		i(1, "Explanation"), -- 插入节点1，用户输入
+		i(1, "Explanation"),
 		t({ "", '"""' }),
 	}),
 })
