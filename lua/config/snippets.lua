@@ -32,13 +32,23 @@ ls.add_snippets("sh", {
 	}),
 })
 
-ls.add_snippets("c", {
-	ls.snippet("cm", {
-		t("// ----"),
-		i(1, "comment"),
-		t(" ----"),
-	}),
-})
+local ctypes = { "c", "cpp", "h", "cu", "cc" }
+
+for _, ft in ipairs(ctypes) do
+	ls.add_snippets(ft, {
+		ls.snippet("cm", {
+			t("// ---- "),
+			i(1, "comment"),
+			t(" ----"),
+		}),
+		ls.snippet("Cm", {
+			t("//------------------------------------//"),
+			t({ "", "//      " }),
+			i(1, "Comment"),
+			t({ "      //", "//------------------------------------//" }),
+		}),
+	})
+end
 
 ls.add_snippets("python", {
 	ls.snippet("def", {
