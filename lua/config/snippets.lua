@@ -308,6 +308,10 @@ ls.add_snippets("markdown", {
 		t("\\nabla "),
 	}),
 
+	ls.snippet("fa", {
+		t("\\forall "),
+	}),
+
 	ls.snippet("lbd", {
 		t("\\lambda "),
 	}),
