@@ -21,6 +21,7 @@ local function nasm_format()
 	local new_lines = {}
 	local indent_level = 0
 	local indent_str = "    "
+	local comment_align_col = 40
 
 	for _, line in ipairs(lines) do
 		local trimmed = line:match("^%s*(.-)%s*$") or ""
@@ -30,28 +31,52 @@ local function nasm_format()
 			goto continue
 		end
 
-		local is_macro_start = trimmed:match("^%%macro") or trimmed:match("^%%rep") or trimmed:match("^%%if")
-		local is_macro_end = trimmed:match("^%%endmacro") or trimmed:match("^%%endrep") or trimmed:match("^%%endif")
-		local is_macro_mid = trimmed:match("^%%else") or trimmed:match("^%%elif")
-		local is_directive = trimmed:match("^%%define") or trimmed:match("^default") or trimmed:match("^SECTION")
+		local content, comment = trimmed:match("([^;]*)(;.*)")
+		if not content then
+			content = trimmed
+			comment = ""
+		end
+
+		content = content:match("(.-)%s*$") or ""
+
+		local is_macro_start = content:match("^%%macro") or content:match("^%%rep") or content:match("^%%if")
+		local is_macro_end = content:match("^%%endmacro") or content:match("^%%endrep") or content:match("^%%endif")
+		local is_macro_mid = content:match("^%%else") or content:match("^%%elif")
+		local is_directive = content:match("^%%define") or content:match("^default") or content:match("^SECTION")
 
 		if is_macro_end or is_macro_mid then
 			indent_level = indent_level - 1
 		end
-
 		if indent_level < 0 then
 			indent_level = 0
 		end
 
 		local current_indent = string.rep(indent_str, indent_level)
+		local formatted_line = ""
 
 		if is_directive then
-			table.insert(new_lines, trimmed)
-		elseif is_macro_start or is_macro_mid then
-			table.insert(new_lines, current_indent .. trimmed)
-			indent_level = indent_level + 1
+			formatted_line = content
 		else
-			table.insert(new_lines, current_indent .. trimmed)
+			formatted_line = current_indent .. content
+		end
+
+		if comment ~= "" then
+			if content == "" and not is_directive then
+				formatted_line = current_indent .. comment
+			else
+				local current_len = #formatted_line
+				local padding = comment_align_col - current_len
+				if padding < 1 then
+					padding = 1
+				end
+				formatted_line = formatted_line .. string.rep(" ", padding) .. comment
+			end
+		end
+
+		table.insert(new_lines, formatted_line)
+
+		if is_macro_start or is_macro_mid then
+			indent_level = indent_level + 1
 		end
 
 		::continue::
