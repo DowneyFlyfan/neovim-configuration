@@ -377,6 +377,10 @@ ls.add_snippets("markdown", {
 		t("\\subseteq "),
 	}),
 
+	ls.snippet("po", {
+		t("\\propto "),
+	}),
+
 	-- Arrows, Comparator
 	ls.snippet("ra", {
 		t("\\xrightarrow{"),
