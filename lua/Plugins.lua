@@ -89,6 +89,26 @@ require("lazy").setup({
 		"ray-x/lsp_signature.nvim", -- Signature hints
 		event = "insertenter",
 	},
+	{
+		"madskjeldgaard/cppman.nvim", -- Cpp manual
+		requires = {
+			{ "MunifTanjim/nui.nvim" },
+		},
+		config = function()
+			local cppman = require("cppman")
+			cppman.setup()
+
+			-- Make a keymap to open the word under cursor in CPPman
+			vim.keymap.set("n", "gh", function()
+				cppman.open_cppman_for(vim.fn.expand("<cword>"))
+			end)
+
+			-- Open search box
+			vim.keymap.set("n", "<leader>cc", function()
+				cppman.input()
+			end)
+		end,
+	},
 
 	-- [Completion & Snippets]
 	{
