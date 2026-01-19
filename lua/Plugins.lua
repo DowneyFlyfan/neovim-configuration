@@ -89,11 +89,14 @@ require("lazy").setup({
 		"ray-x/lsp_signature.nvim", -- Signature hints
 		event = "insertenter",
 	},
+
+	-- [Docs]
 	{
 		"madskjeldgaard/cppman.nvim", -- Cpp manual
 		requires = {
 			{ "MunifTanjim/nui.nvim" },
 		},
+		ft = { "c", "ch", "cc", "cpp", "cu", "cuh" },
 		config = function()
 			local cppman = require("cppman")
 			cppman.setup()

@@ -65,9 +65,9 @@ ls.add_snippets("python", {
 		i(1, "comment"),
 		t(" ----"),
 	}),
-	ls.snippet("ep", {
+	ls.snippet("Cm", {
 		t({ 'r"""', "" }),
-		i(1, "Explanation"),
+		i(1, "Comments"),
 		t({ "", '"""' }),
 	}),
 })
