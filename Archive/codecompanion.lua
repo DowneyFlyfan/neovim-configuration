@@ -1,30 +1,30 @@
 require("codecompanion").setup({
 	adapters = {
-		deepseek = function()
-			return require("codecompanion.adapters").extend("deepseek", {
-				env = {
-					api_key = "DEEPSEEK_API_KEY",
-				},
-				schema = {
-					model = {
-						default = "deepseek-chat", -- deepseek-reasoner
-					},
-				},
-			})
-		end,
-
-		-- gemini = function()
-		-- 	return require("codecompanion.adapters").extend("gemini", {
+		-- deepseek = function()
+		-- 	return require("codecompanion.adapters").extend("deepseek", {
 		-- 		env = {
-		-- 			api_key = "GEMINI_API_KEY",
+		-- 			api_key = "DEEPSEEK_API_KEY",
 		-- 		},
 		-- 		schema = {
 		-- 			model = {
-		-- 				default = "gemini-2.5-flash-preview", -- gemini-2.5-pro-03-25
+		-- 				default = "deepseek-chat", -- deepseek-reasoner
 		-- 			},
 		-- 		},
 		-- 	})
 		-- end,
+
+		gemini = function()
+			return require("codecompanion.adapters").extend("gemini", {
+				env = {
+					api_key = "GEMINI_API_KEY",
+				},
+				schema = {
+					model = {
+						default = "gemini-3-flash-preview",
+					},
+				},
+			})
+		end,
 	},
 
 	strategies = {

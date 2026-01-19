@@ -45,10 +45,23 @@ local function open_python_doc()
 	}
 
 	local win = vim.api.nvim_open_win(buf, true, win_opts)
-	vim.cmd("terminal pydoc " .. word)
-	vim.cmd("startinsert")
 
-	vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = buf, silent = true })
+	vim.cmd("terminal pydoc " .. word)
+
+	vim.keymap.set("t", "q", "q<C-\\><C-n><cmd>close<CR>", { buffer = buf, silent = true })
+
+	vim.api.nvim_create_autocmd("TermClose", {
+		buffer = buf,
+		callback = function()
+			vim.schedule(function()
+				if vim.api.nvim_win_is_valid(win) then
+					vim.api.nvim_win_close(win, true)
+				end
+			end)
+		end,
+	})
+
+	vim.cmd("startinsert")
 end
 
 vim.api.nvim_create_autocmd("FileType", {
