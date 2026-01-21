@@ -380,11 +380,13 @@ require("lazy").setup({
 		event = "VeryLazy",
 		version = false,
 		opts = {
-			provider = "gemini",
+			provider = "openai",
+			mode = "agentic",
 			providers = {
-				gemini = {
-					api_key_name = "GEMINI_API_KEY",
-					model = "gemini-3-flash-preview",
+				openai = {
+					endpoint = "https://api.deepseek.com",
+					api_key_name = "DEEPSEEK_API_KEY",
+					model = "deepseek-chat",
 				},
 			},
 			windows = { position = "smart", width = 38 },
