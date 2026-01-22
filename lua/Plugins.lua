@@ -364,7 +364,7 @@ require("lazy").setup({
 
 	-- [AI Engine]
 	{
-		"yetone/avante.nvim", -- AI Assistant
+		"yetone/avante.nvim",
 		build = function()
 			if vim.fn.has("win32") == 1 then
 				local plugin_path = vim.fn.stdpath("data") .. "/lazy/avante.nvim"
@@ -396,7 +396,7 @@ require("lazy").setup({
 			},
 			ask = {
 				floating = true,
-				start_insert = false,
+				start_insert = true,
 				border = "rounded",
 				focus_on_apply = "ours",
 			},

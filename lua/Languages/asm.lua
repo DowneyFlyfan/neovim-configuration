@@ -39,10 +39,14 @@ local function nasm_format()
 
 		content = content:match("(.-)%s*$") or ""
 
-		local is_macro_start = content:match("^%%macro") or content:match("^%%rep") or content:match("^%%if")
+		local is_macro_start = content:match("^%%macro")
+			or content:match("^%%rep")
+			or content:match("^%%if")
+			or content:match("^%%ifndef")
 		local is_macro_end = content:match("^%%endmacro") or content:match("^%%endrep") or content:match("^%%endif")
 		local is_macro_mid = content:match("^%%else") or content:match("^%%elif")
-		local is_directive = content:match("^%%define") or content:match("^default") or content:match("^SECTION")
+		-- 移除 %define，使其能够缩进
+		local is_global_directive = content:match("^default") or content:match("^SECTION")
 
 		if is_macro_end or is_macro_mid then
 			indent_level = indent_level - 1
@@ -54,14 +58,14 @@ local function nasm_format()
 		local current_indent = string.rep(indent_str, indent_level)
 		local formatted_line = ""
 
-		if is_directive then
+		if is_global_directive then
 			formatted_line = content
 		else
 			formatted_line = current_indent .. content
 		end
 
 		if comment ~= "" then
-			if content == "" and not is_directive then
+			if content == "" and not is_global_directive then
 				formatted_line = current_indent .. comment
 			else
 				local current_len = #formatted_line
