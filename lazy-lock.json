@@ -10,7 +10,7 @@
   "conform.nvim": { "branch": "master", "commit": "c2526f1cde528a66e086ab1668e996d162c75f4f" },
   "cppman.nvim": { "branch": "main", "commit": "801c5b178ee1246bc8ee044984d5758933b2baca" },
   "dressing.nvim": { "branch": "master", "commit": "2d7c2db2507fa3c4956142ee607431ddb2828639" },
-  "fzf-lua": { "branch": "main", "commit": "6b5bb1c8d86845c4b21e2146cc11e934a7f831cb" },
+  "fzf-lua": { "branch": "main", "commit": "95f6baea73d0440a28c55d370d424ac645b447a0" },
   "gitsigns.nvim": { "branch": "main", "commit": "abf82a65f185bd54adc0679f74b7d6e1ada690c9" },
   "gruvbox": { "branch": "master", "commit": "697c00291db857ca0af00ec154e5bd514a79191f" },
   "img-clip.nvim": { "branch": "main", "commit": "b6ddfb97b5600d99afe3452d707444afda658aca" },

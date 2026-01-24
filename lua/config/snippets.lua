@@ -101,6 +101,13 @@ ls.add_snippets("markdown", {
 		i(2, "} "),
 	}),
 
+	ls.snippet("dpt", {
+		t("\\dfrac{\\partial "),
+		i(1, ""),
+		t("}{\\partial "),
+		i(2, "} "),
+	}),
+
 	ls.snippet("pt", {
 		t("\\frac{\\partial "),
 		i(1, ""),
