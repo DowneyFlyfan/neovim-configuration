@@ -79,12 +79,13 @@ require("lazy").setup({
 				"asm_lsp",
 			},
 		},
+
 		dependencies = {
 			{ "mason-org/mason.nvim", opts = {} },
 			"neovim/nvim-lspconfig",
 		},
 	},
-	{ "WhoIsSethDaniel/mason-tool-installer.nvim" }, -- Auto-install tools
+	{ "WhoIsSethDaniel/mason-tool-installer.nvim" },
 	{
 		"ray-x/lsp_signature.nvim", -- Signature hints
 		event = "insertenter",
@@ -378,7 +379,6 @@ require("lazy").setup({
 			end
 		end,
 		event = "VeryLazy",
-		-- instructions_file = "gemini.md",
 		version = false,
 		opts = {
 			provider = "gemini",

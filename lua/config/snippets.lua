@@ -16,22 +16,6 @@ local m = extras.m
 local l = extras.l
 local postfix = require("luasnip.extras.postfix").postfix
 
-ls.add_snippets("matlab", {
-	ls.snippet("cm", {
-		t({ "%{", "" }),
-		i(1, "comment"),
-		t({ "", "%}" }),
-	}),
-})
-
-ls.add_snippets("sh", {
-	ls.snippet("cm", {
-		t("# ==== "),
-		i(1, "comment"),
-		t(" ===="),
-	}),
-})
-
 local ctypes = { "c", "cpp", "h", "cu", "cc" }
 
 for _, ft in ipairs(ctypes) do
@@ -49,6 +33,22 @@ for _, ft in ipairs(ctypes) do
 		}),
 	})
 end
+
+ls.add_snippets("matlab", {
+	ls.snippet("cm", {
+		t({ "%{", "" }),
+		i(1, "comment"),
+		t({ "", "%}" }),
+	}),
+})
+
+ls.add_snippets("sh", {
+	ls.snippet("cm", {
+		t("# ==== "),
+		i(1, "comment"),
+		t(" ===="),
+	}),
+})
 
 ls.add_snippets("python", {
 	ls.snippet("def", {
@@ -72,7 +72,6 @@ ls.add_snippets("python", {
 	}),
 })
 
--- Markdown Snippets
 ls.add_snippets("markdown", {
 	-- Brackets & Matrixs & Integral
 	ls.snippet("eq", {
@@ -452,7 +451,6 @@ ls.add_snippets("markdown", {
 	}),
 })
 
--- JSX Snippets
 ls.add_snippets("javascriptreact", {
 	ls.snippet("cm", {
 		t("{/* "),
