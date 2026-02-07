@@ -69,6 +69,10 @@ vim.api.nvim_set_keymap("v", "J", "5j", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "K", "5k", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "y", '"+y', { noremap = true, silent = true }) -- Yank to system clipboard
 
+-- Bookmark
+vim.g.bookmark_save_per_working_dir = 1
+vim.g.bookmark_auto_save = 1
+
 -- Terminal
 function open_terminal()
 	vim.cmd("vsplit | terminal")

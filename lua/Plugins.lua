@@ -339,6 +339,10 @@ require("lazy").setup({
 		end,
 	},
 
+	{
+		"MattesGroeger/vim-bookmarks", -- bookmarks
+	},
+
 	-- [Specific Languages]
 	{
 		"lervag/vimtex", -- LaTeX
