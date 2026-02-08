@@ -69,20 +69,15 @@ vim.api.nvim_set_keymap("v", "J", "5j", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "K", "5k", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "y", '"+y', { noremap = true, silent = true }) -- Yank to system clipboard
 
--- Bookmark
-vim.g.bookmark_save_per_working_dir = 1
-vim.g.bookmark_auto_save = 1
-
 -- Terminal
-function open_terminal()
+function Open_terminal()
 	vim.cmd("vsplit | terminal")
-
 	vim.cmd("vertical resize 65")
 	vim.defer_fn(function()
 		vim.api.nvim_input("a")
 	end, 300)
 end
-vim.api.nvim_set_keymap("n", "T", ":lua open_terminal()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "T", ":lua Open_terminal()<CR>", { noremap = true, silent = true })
 
 -- Debugging
 -- vim.lsp.set_log_level("INFO")

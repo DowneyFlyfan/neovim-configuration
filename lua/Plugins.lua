@@ -338,9 +338,12 @@ require("lazy").setup({
 			require("config.todo-comments")
 		end,
 	},
-
 	{
 		"MattesGroeger/vim-bookmarks", -- bookmarks
+		config = function()
+			vim.g.bookmark_sign = "⚽︎"
+			vim.g.bookmark_highlight_lines = 1
+		end,
 	},
 
 	-- [Specific Languages]
