@@ -143,6 +143,7 @@ local languages = {
 	"rust",
 	"asm",
 	"bash",
+	"tcl",
 }
 
 for _, lang in ipairs(languages) do

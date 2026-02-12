@@ -389,7 +389,7 @@ require("lazy").setup({
 		event = "VeryLazy",
 		version = false,
 		opts = {
-			provider = "gemini",
+			provider = "openai",
 			providers = {
 				openai = {
 					endpoint = "https://api.deepseek.com",
