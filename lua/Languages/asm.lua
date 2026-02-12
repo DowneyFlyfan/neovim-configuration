@@ -96,7 +96,32 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	callback = nasm_format,
 })
 
+local x86_doc_dir = vim.fn.expand("~/.local/share/x86_doc")
 local x86_doc_cache = {}
+local x86_file_index = nil
+
+local function build_x86_index()
+	if x86_file_index then
+		return
+	end
+	x86_file_index = {}
+	local handle = vim.uv.fs_scandir(x86_doc_dir)
+	if not handle then
+		return
+	end
+	while true do
+		local name, typ = vim.uv.fs_scandir_next(handle)
+		if not name then
+			break
+		end
+		if typ == "file" and name:match("%.html$") then
+			local base = name:gsub("%.html$", "")
+			for part in base:gmatch("[^:]+") do
+				x86_file_index[part] = x86_doc_dir .. "/" .. name
+			end
+		end
+	end
+end
 
 local function html_entities(s)
 	return s
@@ -235,31 +260,33 @@ local function show_x86_doc(word)
 	vim.wo[win].cursorline = true
 	vim.wo[win].foldenable = false
 
-	if x86_doc_cache[word] then
-		vim.api.nvim_buf_set_lines(buf, 0, -1, false, x86_doc_cache[word])
-	else
-		vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Loading..." })
-		vim.system(
-			{ "curl", "-s", "-L", "https://www.felixcloutier.com/x86/" .. word },
-			{ text = true },
-			vim.schedule_wrap(function(result)
-				if not vim.api.nvim_buf_is_valid(buf) then
-					return
-				end
-				if result.code ~= 0 or not result.stdout or result.stdout == "" then
-					vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "No documentation found for: " .. word })
-					return
-				end
-				local lines = html_to_markdown(result.stdout)
-				x86_doc_cache[word] = lines
-				vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-			end)
-		)
-	end
-
 	vim.keymap.set("n", "q", function()
 		vim.api.nvim_win_close(win, true)
 	end, { buffer = buf, desc = "Close documentation window" })
+
+	if x86_doc_cache[word] then
+		vim.api.nvim_buf_set_lines(buf, 0, -1, false, x86_doc_cache[word])
+		return
+	end
+
+	build_x86_index()
+	local filepath = x86_file_index and x86_file_index[word]
+	if not filepath then
+		vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "No documentation found for: " .. word })
+		return
+	end
+
+	local f = io.open(filepath, "r")
+	if not f then
+		vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "Failed to read: " .. filepath })
+		return
+	end
+	local raw = f:read("*a")
+	f:close()
+
+	local lines = html_to_markdown(raw)
+	x86_doc_cache[word] = lines
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 end
 
 vim.api.nvim_create_autocmd("FileType", {
