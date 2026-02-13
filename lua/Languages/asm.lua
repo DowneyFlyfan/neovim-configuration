@@ -8,6 +8,19 @@ vim.lsp.config("asm_lsp", {
 	capabilities = Capabilities,
 	root_patterns = { ".asm-lsp.toml", ".git" },
 	filetypes = { "asm", "nasm", "s" },
+	handlers = {
+		["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
+			if result and result.diagnostics then
+				for _, diag in ipairs(result.diagnostics) do
+					local msg = diag.message:lower()
+					if msg:find("warning") then
+						diag.severity = vim.lsp.protocol.DiagnosticSeverity.Warning
+					end
+				end
+			end
+			vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
+		end,
+	},
 })
 
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
@@ -22,6 +35,8 @@ local function nasm_format()
 	local indent_level = 0
 	local indent_str = "    "
 	local comment_align_col = 40
+
+	local in_label = false
 
 	for _, line in ipairs(lines) do
 		local trimmed = line:match("^%s*(.-)%s*$") or ""
@@ -39,13 +54,13 @@ local function nasm_format()
 
 		content = content:match("(.-)%s*$") or ""
 
+		local is_label = content:match("^[%w_.]+:%s*$") ~= nil
 		local is_macro_start = content:match("^%%macro")
 			or content:match("^%%rep")
 			or content:match("^%%if")
 			or content:match("^%%ifndef")
 		local is_macro_end = content:match("^%%endmacro") or content:match("^%%endrep") or content:match("^%%endif")
 		local is_macro_mid = content:match("^%%else") or content:match("^%%elif")
-		-- 移除 %define，使其能够缩进
 		local is_global_directive = content:match("^default") or content:match("^SECTION")
 
 		if is_macro_end or is_macro_mid then
@@ -55,18 +70,25 @@ local function nasm_format()
 			indent_level = 0
 		end
 
+		if is_label then
+			in_label = true
+		end
+
+		local label_indent = (in_label and not is_label) and indent_str or ""
 		local current_indent = string.rep(indent_str, indent_level)
 		local formatted_line = ""
 
 		if is_global_directive then
 			formatted_line = content
-		else
+		elseif is_label then
 			formatted_line = current_indent .. content
+		else
+			formatted_line = current_indent .. label_indent .. content
 		end
 
 		if comment ~= "" then
 			if content == "" and not is_global_directive then
-				formatted_line = current_indent .. comment
+				formatted_line = current_indent .. label_indent .. comment
 			else
 				local current_len = #formatted_line
 				local padding = comment_align_col - current_len
@@ -124,8 +146,7 @@ local function build_x86_index()
 end
 
 local function html_entities(s)
-	return s
-		:gsub("&amp;", "&")
+	return s:gsub("&amp;", "&")
 		:gsub("&lt;", "<")
 		:gsub("&gt;", ">")
 		:gsub("&nbsp;", " ")
@@ -292,8 +313,20 @@ end
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "asm", "nasm", "s" },
 	callback = function()
+		vim.wo.foldmethod = "expr"
+		vim.wo.foldexpr = "v:lua.AsmFoldExpr(v:lnum)"
+
 		vim.keymap.set("n", "gh", function()
 			show_x86_doc(vim.fn.expand("<cword>"):lower())
 		end, { desc = "Open x86 doc in floating window", buffer = 0 })
 	end,
 })
+
+function AsmFoldExpr(lnum)
+	local line = vim.fn.getline(lnum)
+	if line:match("^%s*$") then
+		return "-1"
+	end
+	local spaces = line:match("^( *)") or ""
+	return tostring(math.floor(#spaces / 4))
+end
