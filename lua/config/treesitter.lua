@@ -1,29 +1,41 @@
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.opt.foldenable = true
-vim.opt.foldlevelstart = 0
+local ensure_parsers = {
+	"python",
+	"c",
+	"cpp",
+	"cuda",
+	"rust",
+	"lua",
+	"vim",
+	"vimdoc",
+	"query",
+	"bibtex",
+	"matlab",
+	"systemverilog",
+	"bash",
+	"html",
+	"javascript",
+	"css",
+	"json",
+	"yaml",
+	"toml",
+	"markdown",
+	"markdown_inline",
+	"comment",
+	"tcl",
+}
 
-require("nvim-treesitter").setup({
-	install_dir = vim.fn.stdpath("data") .. "/site",
+local ts = require("nvim-treesitter")
+
+-- install() is a no-op for already-installed parsers
+ts.install(ensure_parsers)
+
+-- Enable treesitter highlighting, folding, and indentation via FileType autocmd
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function()
+		pcall(vim.treesitter.start)
+
+		vim.wo[0][0].foldmethod = "expr"
+		vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+	end,
 })
-
-require("nvim-treesitter").install({ "rust", "javascript", "zig", "c", "systemverilog" })
-
--- require("nvim-treesitter.configs").setup({
--- 	ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
--- 	sync_install = false,
--- 	auto_install = true,
--- 	ignore_install = { "javascript" },
---
--- 	highlight = {
--- 		enable = true,
--- 		disable = function(lang, buf)
--- 			local max_filesize = 100 * 1024 -- 100 KB
--- 			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
--- 			if ok and stats and stats.size > max_filesize then
--- 				return true
--- 			end
--- 		end,
--- 		additional_vim_regex_highlighting = false,
--- 	},
--- })
