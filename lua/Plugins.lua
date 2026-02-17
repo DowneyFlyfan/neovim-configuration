@@ -157,7 +157,9 @@ require("lazy").setup({
 
 	-- [Treesitter & Syntax]
 	{
-		"nvim-treesitter/nvim-treesitter", -- Parser generator
+		"nvim-treesitter/nvim-treesitter",
+		lazy = false,
+		build = ":TSUpdate",
 		config = function()
 			require("config.treesitter")
 		end,
