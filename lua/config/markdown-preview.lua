@@ -17,7 +17,7 @@ vim.g.mkdp_open_to_the_world = 0
 vim.g.mkdp_open_ip = ""
 
 -- 指定用于打开预览页面的浏览器
-vim.g.mkdp_browser = "google-chrome-stable"
+vim.g.mkdp_browser = vim.fn.has("linux") == 1 and "google-chrome-stable" or ""
 
 -- 打开预览页面时在命令行中不显示 URL
 vim.g.mkdp_echo_preview_url = 1
