@@ -229,6 +229,16 @@ require("lazy").setup({
 		"jay-babu/mason-nvim-dap.nvim", -- DAP manager
 		dependencies = { "mfussenegger/nvim-dap" },
 		config = function()
+			require("mason-nvim-dap").setup({
+				handlers = {
+					function(config)
+						require("mason-nvim-dap").default_setup(config)
+					end,
+					bash = function()
+						-- Skip automatic bash config; we set it up manually
+					end,
+				},
+			})
 			require("config.nvim-dap")
 		end,
 	},

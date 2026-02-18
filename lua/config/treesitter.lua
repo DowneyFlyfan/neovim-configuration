@@ -22,6 +22,7 @@ local ensure_parsers = {
 	"markdown_inline",
 	"comment",
 	"tcl",
+	"asm",
 }
 
 local ts = require("nvim-treesitter")

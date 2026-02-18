@@ -121,6 +121,10 @@ dap.configurations.sh = {
 		type = "bashdb",
 		request = "launch",
 		name = "Launch file",
+		args = function()
+			local input = vim.fn.input("Arguments: ")
+			return vim.fn.split(input, " ")
+		end,
 		showDebugOutput = true,
 		pathBashdb = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb",
 		pathBashdbLib = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir",
@@ -129,11 +133,9 @@ dap.configurations.sh = {
 		program = "${file}",
 		cwd = "${workspaceFolder}",
 		pathCat = "cat",
-		pathBash = "/bin/bash",
+		pathBash = "/opt/homebrew/bin/bash",
 		pathMkfifo = "mkfifo",
 		pathPkill = "pkill",
-		args = {},
-		argsString = "",
 		env = {},
 		terminalKind = "integrated",
 	},
