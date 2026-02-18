@@ -17,7 +17,7 @@ vim.g.mkdp_open_to_the_world = 0
 vim.g.mkdp_open_ip = ""
 
 -- 指定用于打开预览页面的浏览器
-vim.g.mkdp_browser = ""
+vim.g.mkdp_browser = "google-chrome-stable"
 
 -- 打开预览页面时在命令行中不显示 URL
 vim.g.mkdp_echo_preview_url = 1
@@ -66,4 +66,4 @@ vim.g.mkdp_combine_preview = 0
 vim.g.mkdp_combine_preview_auto_refresh = 1
 
 -- Markdown Toggle
-vim.api.nvim_set_keymap("n", "mp", ":MarkdownPreviewToggle<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<space>p", ":MarkdownPreviewToggle<CR>", { noremap = true, silent = true })
