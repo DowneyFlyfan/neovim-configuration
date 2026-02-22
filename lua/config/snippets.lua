@@ -458,3 +458,11 @@ ls.add_snippets("javascriptreact", {
 		t(" */}"),
 	}),
 })
+
+ls.add_snippets("tcl", {
+	ls.snippet("cm", {
+		t("# ==== "),
+		i(1, "comment"),
+		t(" ===="),
+	}),
+})
