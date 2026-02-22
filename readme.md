@@ -22,6 +22,7 @@ This repository contains my personal Neovim configuration. It's built using Lua 
     | **Python 3** | Required for Python development and some plugins. |
     | **Rust**, **cargo** | Required for compiling `avante.nvim`, `asm_lsp` |
     | **C/C++ Compiler** | `clang` or `gcc` for compiling Treesitter parsers. |
+    | **clangd** | For clangd LSP |
     | **tree-sitter-cli** | For `nvim-treesitter` |
     | **runc** | Custom script/command expected for running C/C++ files (referenced in `lua/Languages/c.lua`). |
 
