@@ -33,6 +33,7 @@ local function nasm_format()
 	local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
 	local new_lines = {}
 	local indent_level = 0
+	local macro_depth = 0
 	local indent_str = "    "
 	local comment_align_col = 40
 
@@ -64,7 +65,13 @@ local function nasm_format()
 		local is_global_directive = content:match("^default") or content:match("^SECTION")
 
 		if is_macro_end or is_macro_mid then
-			indent_level = indent_level - 1
+			macro_depth = macro_depth - 1
+			if macro_depth < 0 then
+				macro_depth = 0
+			end
+			if macro_depth == 0 then
+				indent_level = indent_level - 1
+			end
 		end
 		if indent_level < 0 then
 			indent_level = 0
@@ -102,7 +109,10 @@ local function nasm_format()
 		table.insert(new_lines, formatted_line)
 
 		if is_macro_start or is_macro_mid then
-			indent_level = indent_level + 1
+			if macro_depth == 0 then
+				indent_level = indent_level + 1
+			end
+			macro_depth = macro_depth + 1
 		end
 
 		::continue::
