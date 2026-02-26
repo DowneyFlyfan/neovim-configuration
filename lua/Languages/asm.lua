@@ -8,19 +8,51 @@ vim.lsp.config("asm_lsp", {
 	capabilities = Capabilities,
 	root_patterns = { ".asm-lsp.toml", ".git" },
 	filetypes = { "asm", "nasm", "s" },
-	handlers = {
-		["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
-			if result and result.diagnostics then
-				for _, diag in ipairs(result.diagnostics) do
-					local msg = diag.message:lower()
-					if msg:find("warning") then
-						diag.severity = vim.lsp.protocol.DiagnosticSeverity.Warning
+})
+
+local nasm_diag_ns = vim.api.nvim_create_namespace("nasm_diag")
+
+local function nasm_lint(bufnr)
+	bufnr = bufnr or vim.api.nvim_get_current_buf()
+	local filename = vim.api.nvim_buf_get_name(bufnr)
+	if filename == "" then
+		return
+	end
+
+	vim.fn.jobstart({ "nasm", "-f", "macho64", "-o", "/dev/null", filename }, {
+		stderr_buffered = true,
+		on_stderr = function(_, data)
+			local diagnostics = {}
+			for _, line in ipairs(data) do
+				local lnum, sev_str, msg = line:match(":(%d+): (%w+): (.+)")
+				if lnum then
+					local severity = vim.diagnostic.severity.ERROR
+					if sev_str == "warning" then
+						severity = vim.diagnostic.severity.WARN
 					end
+					table.insert(diagnostics, {
+						lnum = tonumber(lnum) - 1,
+						col = 0,
+						message = msg,
+						severity = severity,
+						source = "nasm",
+					})
 				end
 			end
-			vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
+			vim.schedule(function()
+				if vim.api.nvim_buf_is_valid(bufnr) then
+					vim.diagnostic.set(nasm_diag_ns, bufnr, diagnostics)
+				end
+			end)
 		end,
-	},
+	})
+end
+
+vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost" }, {
+	pattern = { "*.nasm", "*.asm" },
+	callback = function(ev)
+		nasm_lint(ev.buf)
+	end,
 })
 
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
