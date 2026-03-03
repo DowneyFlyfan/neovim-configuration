@@ -323,6 +323,10 @@ ls.add_snippets("markdown", {
 	}),
 
 	-- Mathmatical Symbols
+	ls.snippet("ag", {
+		t("\\angle "),
+	}),
+
 	ls.snippet("sm", {
 		t("\\sum_{"),
 		i(1, ""),
