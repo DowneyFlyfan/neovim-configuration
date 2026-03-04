@@ -1,6 +1,7 @@
 vim.lsp.config("asm_lsp", {
 	on_attach = function(client, bufnr)
 		client.server_capabilities.semanticTokensProvider = nil
+		client.server_capabilities.signatureHelpProvider = nil
 		if _G.On_attach then
 			_G.On_attach(client, bufnr)
 		end
