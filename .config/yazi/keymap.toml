@@ -1,0 +1,348 @@
+# Yazi keymap — emulate ranger bindings from rc.conf.
+# prepend_keymap stacks on top of yazi defaults; entries here override defaults.
+
+# ============================================================================
+# [mgr] Main file list
+# ============================================================================
+[mgr]
+
+prepend_keymap = [
+  # ---- Quit (rg: Q quitall, q quit, ZZ/ZQ) --------------------------------
+  { on = "q",          run = "quit",                   desc = "Quit" },
+  { on = "Q",          run = "quit --no-cwd-file",     desc = "Quitall" },
+  { on = ["Z", "Z"],   run = "quit",                   desc = "Quit (ZZ)" },
+  { on = ["Z", "Q"],   run = "quit --no-cwd-file",     desc = "Quit (ZQ)" },
+  { on = "<F10>",      run = "quit",                   desc = "Quit" },
+  { on = "<Esc>",      run = "escape",                 desc = "Cancel op" },
+  { on = "<C-c>",      run = "escape",                 desc = "Abort" },
+
+  # ---- Navigation (rg: hjkl + arrows) -------------------------------------
+  { on = "k",          run = "arrow -1",               desc = "Up" },
+  { on = "j",          run = "arrow 1",                desc = "Down" },
+  { on = "h",          run = "leave",                  desc = "Parent" },
+  { on = "l",          run = "plugin smart-enter",     desc = "Enter dir / open file (nvim)" },
+  { on = "<Up>",       run = "arrow -1",               desc = "Up" },
+  { on = "<Down>",     run = "arrow 1",                desc = "Down" },
+  { on = "<Left>",     run = "leave",                  desc = "Parent" },
+  { on = "<Right>",    run = "plugin smart-enter",     desc = "Enter/open" },
+  { on = "<Enter>",    run = "plugin smart-enter",     desc = "Enter/open" },
+
+  # rg: <PAGEDOWN>/<PAGEUP>, <C-F>/<C-B>
+  { on = "<PageUp>",   run = "arrow -100%",            desc = "Page up" },
+  { on = "<PageDown>", run = "arrow 100%",             desc = "Page down" },
+  { on = "<C-b>",      run = "arrow -100%",            desc = "Page up" },
+  { on = "<C-u>",      run = "arrow -50%",             desc = "Half page up" },
+  { on = "<C-d>",      run = "arrow 50%",              desc = "Half page down" },
+  # Note: ranger's <C-f> is page-down, but user remapped it to fzf_select.
+
+  # rg: gg top, G bottom, <HOME>/<END>
+  { on = ["g", "g"],   run = "arrow top",              desc = "Top" },
+  { on = "G",          run = "arrow bot",              desc = "Bottom" },
+  { on = "<Home>",     run = "arrow top",              desc = "Top" },
+  { on = "<End>",      run = "arrow bot",              desc = "Bottom" },
+
+  # rg: K scroll -5, J scroll +5 — cursor move 5 rows (not preview scroll)
+  { on = "K",          run = "arrow -5",               desc = "Up 5" },
+  { on = "J",          run = "arrow 5",                desc = "Down 5" },
+  # rg: <A-j>/<A-k> scroll_preview 1/-1 — actual preview scroll
+  { on = "<A-k>",      run = "seek -1",                desc = "Preview scroll up 1" },
+  { on = "<A-j>",      run = "seek 1",                 desc = "Preview scroll down 1" },
+
+  # rg: H history back, L history forward
+  { on = "H",          run = "back",                   desc = "History back" },
+  { on = "L",          run = "forward",                desc = "History forward" },
+
+  # rg: ] move_parent 1, [ move_parent -1 (sibling dir navigation)
+  # NOTE: yazi 26 removed `parent-arrow` plugin; no built-in equivalent.
+  # Workaround: `h` (leave) + `j`/`k` + `l` (enter) instead.
+  # { on = "]",          run = "plugin parent-arrow --args=1",  desc = "Parent next sibling" },
+  # { on = "[",          run = "plugin parent-arrow --args=-1", desc = "Parent prev sibling" },
+
+  # ---- Jump to dirs (rg: g* chords) ---------------------------------------
+  { on = ["g", "h"],   run = "cd ~",                   desc = "cd ~" },
+  { on = ["g", "r"],   run = "cd /",                   desc = "cd /" },
+  { on = ["g", "/"],   run = "cd /",                   desc = "cd /" },
+  { on = ["g", "e"],   run = "cd /etc",                desc = "cd /etc" },
+  { on = ["g", "u"],   run = "cd /usr",                desc = "cd /usr" },
+  { on = ["g", "d"],   run = "cd /dev",                desc = "cd /dev" },
+  { on = ["g", "o"],   run = "cd /opt",                desc = "cd /opt" },
+  { on = ["g", "v"],   run = "cd /var",                desc = "cd /var" },
+  # rg: gm cd /media — macOS uses /Volumes
+  { on = ["g", "m"],   run = "cd /Volumes",            desc = "cd /Volumes" },
+  { on = ["g", "M"],   run = "cd /mnt",                desc = "cd /mnt" },
+  { on = ["g", "s"],   run = "cd /srv",                desc = "cd /srv" },
+  { on = ["g", "p"],   run = "cd /tmp",                desc = "cd /tmp" },
+  # rg: gi = /run/media/$USER — macOS equivalent is /Volumes
+  { on = ["g", "i"],   run = "cd /Volumes",            desc = "cd /Volumes" },
+  # rg: gl cd -r . (follow symlink of cwd) — yazi: follow
+  { on = ["g", "l"],   run = "follow",                 desc = "Follow symlink" },
+  # Extras matching typical ranger usage:
+  { on = ["g", "c"],   run = "cd ~/.config",           desc = "cd ~/.config" },
+  { on = ["g", "D"],   run = "cd ~/Downloads",         desc = "cd ~/Downloads" },
+
+  # rg: cd = console cd
+  { on = ["c", "d"],   run = "cd --interactive",       desc = "cd (prompt)" },
+
+  # ---- Tagging / marking --------------------------------------------------
+  # rg: <Space> toggle mark + advance cursor (matches ranger default).
+  { on = "<Space>",    run = ["toggle", "arrow 1"],    desc = "Toggle select + down" },
+  # rg: v mark_files all=True toggle=True
+  { on = "v",          run = "toggle_all",             desc = "Toggle all" },
+  # rg: uv mark_files all=True val=False
+  { on = ["u", "v"],   run = "toggle_all --state=off", desc = "Unselect all" },
+  # rg: uV toggle_visual_mode reverse=True; V unused for visual (user rebound to nvim)
+  { on = ["u", "V"],   run = "visual_mode --unset",    desc = "Visual unselect" },
+
+  # ---- Yank / cut / paste (rg: yy, dd, pp) --------------------------------
+  { on = ["y", "y"],   run = "yank",                   desc = "Yank (copy)" },
+  { on = ["d", "d"],   run = "yank --cut",             desc = "Yank (cut)" },
+  { on = ["u", "y"],   run = "unyank",                 desc = "Unyank" },
+  { on = ["u", "d"],   run = "unyank",                 desc = "Uncut" },
+  { on = ["p", "p"],   run = "paste",                  desc = "Paste" },
+  { on = ["p", "o"],   run = "paste --force",          desc = "Paste overwrite" },
+  # rg: pl paste_symlink, pL paste_symlink relative=True (yazi inverts)
+  { on = ["p", "l"],   run = "link",                   desc = "Paste as symlink (abs)" },
+  { on = ["p", "L"],   run = "link --relative",        desc = "Paste as symlink (rel)" },
+  { on = ["p", "h", "l"], run = "hardlink",            desc = "Paste as hardlink" },
+
+  # rg: yp/yd/yn/y. yank path/dir/name/name_without_extension
+  { on = ["y", "p"],   run = "copy path",              desc = "Copy full path" },
+  { on = ["y", "d"],   run = "copy dirname",           desc = "Copy dirname" },
+  { on = ["y", "n"],   run = "copy filename",          desc = "Copy filename" },
+  { on = ["y", "."],   run = "copy name_without_ext",  desc = "Copy stem" },
+
+  # ---- Delete / trash (rg: dD / dT) ---------------------------------------
+  { on = ["d", "D"],   run = "remove --permanently",   desc = "Delete (permanent)" },
+  { on = ["d", "T"],   run = "remove",                 desc = "Trash (to Bin)" },
+  { on = "<Delete>",   run = "remove",                 desc = "Trash" },
+  { on = "<F8>",       run = "remove",                 desc = "Delete" },
+
+  # ---- Create / rename (rg: F7/F2, cw, a, A, I) ---------------------------
+  { on = "<F7>",       run = "create --dir",           desc = "mkdir" },
+  { on = "<Insert>",   run = "create",                 desc = "Touch file" },
+  # rg: a rename_append — cursor before ext
+  { on = "a",          run = "rename --cursor=before_ext", desc = "Rename (before ext)" },
+  # rg: A rename at end
+  { on = "A",          run = "rename --cursor=end",    desc = "Rename at end" },
+  # rg: I rename at start of stem
+  { on = "I",          run = "rename --cursor=start",  desc = "Rename at start" },
+  # rg: cw console rename (blank new name)
+  { on = ["c", "w"],   run = "rename --empty=stem",    desc = "Rename (blank stem)" },
+  { on = "<F2>",       run = "rename",                 desc = "Rename" },
+
+  # ---- Open / edit / view -------------------------------------------------
+  # rg: E edit, <F4> edit, <F3> display_file (pager)
+  { on = "E",          run = "open",                   desc = "Edit (via opener)" },
+  { on = "<F4>",       run = "open",                   desc = "Edit" },
+  { on = "<F3>",       run = "spot",                   desc = "Display file" },
+  # rg: i display_file (quick info/pager) — yazi spot = file info panel
+  { on = "i",          run = "spot",                   desc = "File info" },
+  # rg: r chain open_with
+  { on = "r",          run = "open --interactive",     desc = "Open with..." },
+
+  # ---- Shell (rg: S, !, s, :, ;, V=nvim) ----------------------------------
+  { on = "S",          run = 'shell "$SHELL" --block', desc = "Shell here" },
+  { on = "!",          run = "shell --interactive",    desc = "Shell cmd" },
+  { on = "s",          run = "shell --interactive",    desc = "Shell cmd" },
+  { on = ":",          run = "shell --interactive",    desc = "Shell cmd" },
+  { on = ";",          run = "shell --interactive",    desc = "Shell cmd" },
+  { on = "@",          run = "shell --interactive --cursor=0", desc = "Shell cursor at start" },
+  # rg: V console shell nvim%space (open nvim on selected)
+  { on = "V",          run = 'shell "nvim $@" --block --interactive', desc = "Open in nvim" },
+
+  # ---- Hidden toggle (rg: zh, <C-h>) --------------------------------------
+  { on = ["z", "h"],   run = "hidden toggle",          desc = "Toggle hidden" },
+  { on = "<C-h>",      run = "hidden toggle",          desc = "Toggle hidden" },
+  { on = ".",          run = "hidden toggle",          desc = "Toggle hidden" },
+
+  # ---- Linemode (rg: Mf/Mi/Mm/Mh/Mp/Ms/MH) --------------------------------
+  { on = ["M", "f"],   run = "linemode none",          desc = "Linemode: filename" },
+  { on = ["M", "i"],   run = "linemode size",          desc = "Linemode: size" },
+  { on = ["M", "m"],   run = "linemode mtime",         desc = "Linemode: mtime" },
+  { on = ["M", "h"],   run = "linemode mtime",         desc = "Linemode: mtime (human)" },
+  { on = ["M", "p"],   run = "linemode permissions",   desc = "Linemode: perms" },
+  { on = ["M", "s"],   run = "linemode size",          desc = "Linemode: size" },
+  { on = ["M", "H"],   run = "linemode size",          desc = "Linemode: size" },
+
+  # ---- Sort (rg: o*) ------------------------------------------------------
+  { on = ["o", "n"],   run = "sort natural",       desc = "Sort: natural" },
+  { on = ["o", "N"],   run = "sort natural --reverse",          desc = "Sort: natural (rev)" },
+  { on = ["o", "b"],   run = "sort alphabetical",  desc = "Sort: basename" },
+  { on = ["o", "B"],   run = "sort alphabetical --reverse",     desc = "Sort: basename (rev)" },
+  { on = ["o", "s"],   run = "sort size",          desc = "Sort: size" },
+  { on = ["o", "S"],   run = "sort size --reverse",             desc = "Sort: size (rev)" },
+  { on = ["o", "m"],   run = "sort mtime",         desc = "Sort: mtime" },
+  { on = ["o", "M"],   run = "sort mtime --reverse",            desc = "Sort: mtime (rev)" },
+  # rg: oc/oa use ctime/atime — macOS APFS: fall back to btime
+  { on = ["o", "c"],   run = "sort btime",         desc = "Sort: btime (~ctime)" },
+  { on = ["o", "C"],   run = "sort btime --reverse",            desc = "Sort: btime (rev)" },
+  { on = ["o", "a"],   run = "sort btime",         desc = "Sort: btime (~atime)" },
+  { on = ["o", "A"],   run = "sort btime --reverse",            desc = "Sort: btime (rev)" },
+  { on = ["o", "e"],   run = "sort extension",     desc = "Sort: extension" },
+  { on = ["o", "E"],   run = "sort extension --reverse",        desc = "Sort: extension (rev)" },
+  # rg: ot = by type (dir first)
+  { on = ["o", "t"],   run = "sort alphabetical --dir-first",   desc = "Sort: type" },
+  { on = ["o", "z"],   run = "sort random",                     desc = "Sort: random" },
+  # rg: or toggle reverse
+  { on = ["o", "r"],   run = "sort natural --reverse",          desc = "Toggle reverse" },
+
+  # ---- Search / filter / find (rg: / n N, f, zf) --------------------------
+  # rg: / = console search; but user aliases search = scout -rs (incremental find)
+  { on = "/",          run = "find --smart",                    desc = "Find (in view)" },
+  { on = "?",          run = "find --previous --smart",         desc = "Find previous" },
+  { on = "n",          run = "find_arrow",                      desc = "Find next" },
+  { on = "N",          run = "find_arrow --previous",           desc = "Find prev" },
+  # f = jump-to-char (vim convention); filter moved to zf/zz
+  { on = "f",          run = "plugin jump-to-char",             desc = "Jump to char" },
+  { on = ["z", "f"],   run = "plugin smart-filter",             desc = "Smart filter" },
+  { on = ["z", "z"],   run = "plugin smart-filter",             desc = "Smart filter" },
+  # Subtree search via fd/rg
+  { on = ["c", "s"],   run = "search --via=fd",                 desc = "Search fd" },
+
+  # ---- Tabs (rg: gt/gT/gn/gc, <C-n>/<C-w>, <A-N>, <A-h>/<A-l>) -----------
+  { on = "<Tab>",      run = "tab_switch 1 --relative",         desc = "Next tab" },
+  { on = "<S-Tab>",    run = "tab_switch -1 --relative",        desc = "Prev tab" },
+  { on = ["g", "t"],   run = "tab_switch 1 --relative",         desc = "Next tab" },
+  { on = ["g", "T"],   run = "tab_switch -1 --relative",        desc = "Prev tab" },
+  { on = ["g", "n"],   run = "tab_create --current",            desc = "New tab here" },
+  # rg: gc close tab — avoid clash with `cd`. gC closes.
+  { on = ["g", "C"],   run = "tab_close 0",                     desc = "Close tab" },
+  { on = "<C-n>",      run = "tab_create --current",            desc = "New tab" },
+  { on = "<C-w>",      run = "tab_close 0",                     desc = "Close tab" },
+  { on = "<A-1>",      run = "tab_switch 0",                    desc = "Tab 1" },
+  { on = "<A-2>",      run = "tab_switch 1",                    desc = "Tab 2" },
+  { on = "<A-3>",      run = "tab_switch 2",                    desc = "Tab 3" },
+  { on = "<A-4>",      run = "tab_switch 3",                    desc = "Tab 4" },
+  { on = "<A-5>",      run = "tab_switch 4",                    desc = "Tab 5" },
+  { on = "<A-6>",      run = "tab_switch 5",                    desc = "Tab 6" },
+  { on = "<A-7>",      run = "tab_switch 6",                    desc = "Tab 7" },
+  { on = "<A-8>",      run = "tab_switch 7",                    desc = "Tab 8" },
+  { on = "<A-9>",      run = "tab_switch 8",                    desc = "Tab 9" },
+  { on = "<A-l>",      run = "tab_swap 1",                      desc = "Shift tab right" },
+  { on = "<A-h>",      run = "tab_swap -1",                     desc = "Shift tab left" },
+
+  # ---- Misc ---------------------------------------------------------------
+  # rg: w taskview_open
+  { on = "w",          run = "tasks_show",                      desc = "Task view" },
+  # rg: ? help, <F1> help
+  { on = "<F1>",       run = "help",                            desc = "Help" },
+  # <C-p> ranger is console history; yazi use spot
+  { on = "<C-p>",      run = "spot",                            desc = "Spot info" },
+  # rg: <F5> copy, <F6> cut
+  { on = "<F5>",       run = "yank",                            desc = "Copy" },
+  { on = "<F6>",       run = "yank --cut",                      desc = "Cut" },
+  # rg: <C-z> not defined; add suspend
+  { on = "<C-z>",      run = "suspend",                         desc = "Suspend" },
+
+  # ---- Bookmarks (needs yazi-rs/plugins bookmarks; enable after install) --
+  # { on = "m", run = "plugin bookmarks --args=save",   desc = "Save bookmark" },
+  # { on = "'", run = "plugin bookmarks --args=jump",   desc = "Jump bookmark" },
+  # { on = "`", run = "plugin bookmarks --args=jump",   desc = "Jump bookmark" },
+  # { on = ["u", "m"], run = "plugin bookmarks --args=delete", desc = "Del bookmark" },
+
+  # ---- fzf / zoxide (rg: <C-f>/<C-g>) -------------------------------------
+  { on = "<C-f>",      run = "plugin fzf",                      desc = "fzf files" },
+  { on = "<C-g>",      run = "plugin fzf",                      desc = "fzf locate" },
+
+  # ---- chmod / zoom / toggle-pane (new plugins) ---------------------------
+  { on = ["c", "m"],   run = "plugin chmod",                    desc = "Chmod" },
+  { on = "T",          run = "plugin zoom",                     desc = "Zoom preview" },
+  { on = "+",          run = "plugin zoom -- 1",                desc = "Zoom in" },
+  { on = "-",          run = "plugin zoom -- -1",               desc = "Zoom out" },
+  { on = ["z", "p"],   run = "plugin toggle-pane min-preview",  desc = "Toggle preview pane" },
+  { on = ["z", "P"],   run = "plugin toggle-pane max-preview",  desc = "Max preview pane" },
+  { on = ["z", "b"],   run = "plugin toggle-pane min-parent",   desc = "Toggle parent pane" },
+]
+
+# ============================================================================
+# [tasks] Task viewer
+# ============================================================================
+[tasks]
+prepend_keymap = [
+  { on = "<Esc>",   run = "close",    desc = "Hide" },
+  { on = "w",       run = "close",    desc = "Hide" },
+  { on = "q",       run = "close",    desc = "Hide" },
+  { on = "k",       run = "arrow -1", desc = "Up" },
+  { on = "j",       run = "arrow 1",  desc = "Down" },
+  { on = "K",       run = "arrow -5", desc = "Up x5" },
+  { on = "J",       run = "arrow 5",  desc = "Down x5" },
+  { on = ["d","d"], run = "cancel",   desc = "Cancel task" },
+]
+
+# ============================================================================
+# [input] Text input prompts (rg: cmap bindings)
+# ============================================================================
+[input]
+prepend_keymap = [
+  { on = "<Esc>",   run = "close",          desc = "Cancel" },
+  { on = "<Enter>", run = "close --submit", desc = "Submit" },
+  { on = "<C-c>",   run = "close",          desc = "Cancel" },
+  { on = "<C-u>",   run = "kill bol",       desc = "Kill to BOL" },
+  { on = "<C-k>",   run = "kill eol",       desc = "Kill to EOL" },
+  { on = "<C-w>",   run = "kill backward",  desc = "Kill word back" },
+  { on = "<A-d>",   run = "kill forward",   desc = "Kill word fwd" },
+  { on = "<A-b>",   run = "move -w",        desc = "Word back" },
+  { on = "<A-f>",   run = "move w",         desc = "Word fwd" },
+  { on = "<Home>",  run = "move bol",       desc = "BOL" },
+  { on = "<End>",   run = "move eol",       desc = "EOL" },
+]
+
+# ============================================================================
+# [confirm] Confirmation dialogs
+# ============================================================================
+[confirm]
+prepend_keymap = [
+  { on = "<Esc>",   run = "close",          desc = "Cancel" },
+  { on = "<Enter>", run = "close --submit", desc = "Confirm" },
+  { on = "y",       run = "close --submit", desc = "Yes" },
+  { on = "n",       run = "close",          desc = "No" },
+  { on = "q",       run = "close",          desc = "Cancel" },
+]
+
+# ============================================================================
+# [pick] Picker (open-with)
+# ============================================================================
+[pick]
+prepend_keymap = [
+  { on = "<Esc>",   run = "close",          desc = "Cancel" },
+  { on = "<Enter>", run = "close --submit", desc = "Submit" },
+  { on = "k",       run = "arrow -1",       desc = "Up" },
+  { on = "j",       run = "arrow 1",        desc = "Down" },
+  { on = "q",       run = "close",          desc = "Cancel" },
+]
+
+# ============================================================================
+# [cmp] Completion popup
+# ============================================================================
+[cmp]
+prepend_keymap = [
+  { on = "<Tab>",   run = ["close --submit", "complete --trigger"], desc = "Submit" },
+  { on = "<Enter>", run = ["close --submit", "complete --trigger"], desc = "Submit" },
+  { on = "<Esc>",   run = "close",    desc = "Cancel" },
+  { on = "k",       run = "arrow -1", desc = "Up" },
+  { on = "j",       run = "arrow 1",  desc = "Down" },
+]
+
+# ============================================================================
+# [help] Help panel
+# ============================================================================
+[help]
+prepend_keymap = [
+  { on = "<Esc>", run = "escape",   desc = "Close" },
+  { on = "q",     run = "close",    desc = "Close" },
+  { on = "k",     run = "arrow -1", desc = "Up" },
+  { on = "j",     run = "arrow 1",  desc = "Down" },
+  { on = "K",     run = "arrow -5", desc = "Up x5" },
+  { on = "J",     run = "arrow 5",  desc = "Down x5" },
+]
+
+# ============================================================================
+# [spot] File info spotter
+# ============================================================================
+[spot]
+prepend_keymap = [
+  { on = "<Esc>", run = "close",    desc = "Close" },
+  { on = "q",     run = "close",    desc = "Close" },
+  { on = "k",     run = "arrow -1", desc = "Up" },
+  { on = "j",     run = "arrow 1",  desc = "Down" },
+]

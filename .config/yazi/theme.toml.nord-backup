@@ -1,0 +1,143 @@
+# Hover bars for all 3 panes. preview = reversed → same bar as others (no underline).
+[indicator]
+parent  = { reversed = true }
+current = { reversed = true }
+preview = { reversed = true }
+
+# Inline Nord palette. No [flavor] since yazi-rs/flavors lacks nord.
+# Nord colors:
+#   nord0  #2E3440   nord1  #3B4252   nord2  #434C5E   nord3  #4C566A
+#   nord4  #D8DEE9   nord5  #E5E9F0   nord6  #ECEFF4
+#   nord7  #8FBCBB (cy)  nord8  #88C0D0 (lb)  nord9  #81A1C1 (b)  nord10 #5E81AC (db)
+#   nord11 #BF616A (r)   nord12 #D08770 (or)  nord13 #EBCB8B (y)
+#   nord14 #A3BE8C (g)   nord15 #B48EAD (p)
+
+[mgr]
+# Column separator: blank → no vertical line between panes
+border_symbol = " "
+border_style  = { fg = "#3B4252" }
+
+cwd = { fg = "#88C0D0" }
+
+# Note: row hover styling lives under [indicator] section, not [mgr].
+
+find_keyword  = { fg = "#EBCB8B", italic = true }
+find_position = { fg = "#B48EAD", bg = "reset", italic = true }
+
+marker_copied   = { fg = "#A3BE8C", bg = "#A3BE8C" }
+marker_cut      = { fg = "#BF616A", bg = "#BF616A" }
+marker_marked   = { fg = "#EBCB8B", bg = "#EBCB8B" }
+marker_selected = { fg = "#B48EAD", bg = "#B48EAD" }
+
+count_copied   = { fg = "#ECEFF4", bg = "#A3BE8C" }
+count_cut      = { fg = "#ECEFF4", bg = "#BF616A" }
+count_selected = { fg = "#ECEFF4", bg = "#B48EAD" }
+
+tab_active   = { fg = "#2E3440", bg = "#88C0D0", bold = true }
+tab_inactive = { fg = "#D8DEE9", bg = "#3B4252" }
+tab_width    = 1
+
+syntect_theme = ""
+
+[status]
+overall   = {}
+sep_left  = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+
+perm_sep   = { fg = "#4C566A" }
+perm_type  = { fg = "#A3BE8C" }
+perm_read  = { fg = "#EBCB8B" }
+perm_write = { fg = "#BF616A" }
+perm_exec  = { fg = "#88C0D0" }
+
+progress_label  = { fg = "#ECEFF4", bold = true }
+progress_normal = { fg = "#88C0D0", bg = "#2E3440" }
+progress_error  = { fg = "#BF616A", bg = "#2E3440" }
+
+[mode]
+normal_main = { fg = "#2E3440", bg = "#88C0D0", bold = true }
+normal_alt  = { fg = "#88C0D0", bg = "#3B4252" }
+select_main = { fg = "#2E3440", bg = "#B48EAD", bold = true }
+select_alt  = { fg = "#B48EAD", bg = "#3B4252" }
+unset_main  = { fg = "#2E3440", bg = "#BF616A", bold = true }
+unset_alt   = { fg = "#BF616A", bg = "#3B4252" }
+
+[input]
+border   = { fg = "#88C0D0" }
+title    = {}
+value    = {}
+selected = { reversed = true }
+
+[confirm]
+border     = { fg = "#88C0D0" }
+title      = { fg = "#88C0D0" }
+content    = {}
+list       = {}
+btn_yes    = { reversed = true }
+btn_no     = {}
+btn_labels = ["[Y]es", "[N]o"]
+btn_label  = { fg = "#EBCB8B" }
+
+[pick]
+border   = { fg = "#88C0D0" }
+active   = { fg = "#B48EAD", bold = true }
+inactive = {}
+
+[cmp]
+border       = { fg = "#88C0D0" }
+active       = { reversed = true }
+inactive     = {}
+icon_file    = ""
+icon_folder  = ""
+icon_command = ""
+
+[tasks]
+border  = { fg = "#88C0D0" }
+title   = {}
+hovered = { fg = "#B48EAD", underline = true }
+
+[which]
+mask            = { bg = "#2E3440" }
+cand            = { fg = "#8FBCBB" }
+rest            = { fg = "#4C566A" }
+desc            = { fg = "#B48EAD" }
+separator       = "  "
+separator_style = { fg = "#4C566A" }
+
+[help]
+on      = { fg = "#88C0D0" }
+run     = { fg = "#B48EAD" }
+desc    = { fg = "#D8DEE9" }
+hovered = { bg = "#4C566A", bold = true }
+footer  = { fg = "#2E3440", bg = "#D8DEE9" }
+
+[spot]
+border   = { fg = "#88C0D0" }
+title    = { fg = "#88C0D0" }
+tbl_col  = { fg = "#88C0D0", bold = true }
+tbl_cell = { fg = "#EBCB8B", reversed = true }
+
+[notify]
+title_info  = { fg = "#A3BE8C" }
+title_warn  = { fg = "#EBCB8B" }
+title_error = { fg = "#BF616A" }
+
+[filetype]
+rules = [
+  { mime = "image/*",                     fg = "#88C0D0" },
+  { mime = "video/*",                     fg = "#EBCB8B" },
+  { mime = "audio/*",                     fg = "#EBCB8B" },
+  { mime = "application/zip",             fg = "#B48EAD" },
+  { mime = "application/gzip",            fg = "#B48EAD" },
+  { mime = "application/x-tar",           fg = "#B48EAD" },
+  { mime = "application/x-bzip",          fg = "#B48EAD" },
+  { mime = "application/x-bzip2",         fg = "#B48EAD" },
+  { mime = "application/x-7z-compressed", fg = "#B48EAD" },
+  { mime = "application/x-rar",           fg = "#B48EAD" },
+  { mime = "application/xz",              fg = "#B48EAD" },
+  { name = "*",  is = "orphan", fg = "#BF616A" },
+  { name = "*/", fg = "#81A1C1" },
+]
+
+[icon]
+rules = []

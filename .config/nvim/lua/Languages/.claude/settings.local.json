@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(luac -p /Users/downeyflyfan/.config/nvim/lua/Languages/tcl.lua)"
+    ]
+  }
+}

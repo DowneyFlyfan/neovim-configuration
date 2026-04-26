@@ -1,0 +1,9 @@
+# Backup of previous Nord inline theme: theme.toml.nord-backup
+[flavor]
+dark = "catppuccin-mocha"
+
+# Hover bars for all 3 panes. preview = reversed → same bar as others (no underline).
+[indicator]
+parent  = { reversed = true }
+current = { reversed = true }
+preview = { reversed = true }
