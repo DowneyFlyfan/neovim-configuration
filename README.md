@@ -14,6 +14,7 @@
 [![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/)
 
 [![macOS](https://img.shields.io/badge/macOS-000000?style=flat-square&logo=apple&logoColor=white)](https://www.apple.com/macos/)
+[![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black)](https://www.linux.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
 [![Maintained](https://img.shields.io/badge/maintained-yes-brightgreen?style=flat-square)]()
 [![GitHub stars](https://img.shields.io/github/stars/DowneyFlyfan/terminal-workflow?style=flat-square&logo=github)](https://github.com/DowneyFlyfan/terminal-workflow)
@@ -37,7 +38,8 @@
 | 📦 **One-command access** | The `dotcfg` alias gives you a full git CLI scoped to your dotfiles |
 | 🎨 **Modern stack** | Neovim + Yazi + Kitty + Starship + Zsh (Zinit) |
 | 🔒 **Secret-safe** | API keys & per-machine state isolated in untracked `~/.zshrc.local` |
-| 🍎 **Mac-local repo** | Repo lives at `~/.config/terminal_workflow/`, not synced — only the source files are |
+| 🍎🐧 **Cross-platform** | Works on macOS and Linux — same `dotcfg` workflow, same configs |
+| 📍 **Single-machine repo** | Repo lives at `~/.config/terminal_workflow/`, not synced — only the source files are |
 
 ---
 
@@ -88,7 +90,8 @@ Most dotfile repos rely on **symlinks** (e.g. via [GNU Stow](https://www.gnu.org
 | 🐱 | **Kitty** | `~/.config/kitty/` | Cross-platform config + per-OS overrides (`linux.conf`, `macos.conf`) + custom `tab_bar.py` |
 | 🚀 | **Starship** | `~/.config/starship.toml` | Custom format, language version chips, git context |
 | 🐚 | **Zsh** | `~/.zshrc` | Zinit-based plugin manager, sources `~/.zshrc.local` for secrets/per-machine overrides |
-| 📄 | **README** | `~/.config/terminal_workflow/README.md` | This file |
+| 📄 | **README** | `~/README.md` | This file (lives at repo root so GitHub displays it) |
+| 📜 | **LICENSE** | `~/LICENSE` | MIT License (also at repo root) |
 
 > 🔢 Total tracked: **97 files**
 
@@ -96,7 +99,7 @@ Most dotfile repos rely on **symlinks** (e.g. via [GNU Stow](https://www.gnu.org
 
 ## 🔧 Daily Usage with `dotcfg`
 
-A convenience alias is added to `~/.zshrc.local` (Mac-only, **never** synced):
+A convenience alias is added to `~/.zshrc.local` (per-machine, **never** synced):
 
 ```zsh
 alias dotcfg='git --git-dir="$HOME/.config/terminal_workflow/.git" --work-tree="$HOME"'
@@ -135,6 +138,18 @@ dotcfg checkout -b experiment/nvim-rewrite
 
 ## 🚀 Setup Recap
 
+### 📦 Install the tools
+
+| Tool | macOS 🍎 | Linux 🐧 (Debian/Ubuntu) | Linux 🐧 (Arch) |
+|------|----------|--------------------------|------------------|
+| Neovim | `brew install neovim` | `apt install neovim` | `pacman -S neovim` |
+| Yazi | `brew install yazi` | [build from source](https://yazi-rs.github.io/docs/installation) | `pacman -S yazi` |
+| Kitty | `brew install --cask kitty` | `apt install kitty` | `pacman -S kitty` |
+| Starship | `brew install starship` | `curl -sS https://starship.rs/install.sh \| sh` | `pacman -S starship` |
+| Zinit | auto-installs from `.zshrc` | same | same |
+
+### ⚙️ Bootstrap the repo
+
 ```bash
 # 1️⃣  Create repo dir
 mkdir -p ~/.config/terminal_workflow
@@ -153,7 +168,7 @@ WT="--work-tree=$HOME"
 cd "$HOME"
 git $GD $WT add -f .config/nvim .config/yazi .config/kitty \
                    .config/starship.toml .zshrc \
-                   .config/terminal_workflow/README.md
+                   README.md LICENSE
 git $GD $WT commit -m "Init dotfiles"
 
 # 4️⃣  Add the alias to ~/.zshrc.local
@@ -167,9 +182,11 @@ dotcfg push -u origin main
 
 ---
 
-## 🔁 Unison Interaction
+## 🔁 Unison Interaction *(optional, my setup)*
 
-Unison's `~/.unison/main.prf` is **completely unchanged**. It continues to sync the **real files** at their natural paths between Mac and Omen:
+> 💡 This section describes my personal Mac ↔ Linux (Omen desktop) sync setup. If you don't use Unison, skip it — the bare-style repo works perfectly fine on a single machine.
+
+Unison's `~/.unison/main.prf` is **completely unchanged**. It continues to sync the **real files** at their natural paths between the two machines:
 
 | Path | Synced by Unison? | Tracked by `dotcfg`? |
 |------|:---:|:---:|
@@ -201,7 +218,7 @@ The shared `.zshrc` sources it conditionally:
 [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 ```
 
-On Mac, `~/.zshrc.local` also pulls API keys from the macOS Keychain at startup — so even the local file holds no plaintext credentials.
+On macOS, `~/.zshrc.local` also pulls API keys from the macOS Keychain at startup; on Linux you can use `pass`, `gnome-keyring`, or `secret-tool` to achieve the same — so even the local file holds no plaintext credentials.
 
 ---
 
@@ -209,7 +226,7 @@ On Mac, `~/.zshrc.local` also pulls API keys from the macOS Keychain at startup 
 
 - 🔒 `dotcfg status` **only shows tracked changes** by design (`status.showUntrackedFiles=no`). To peek at untracked: `dotcfg status -u`.
 - 📍 You can run `dotcfg` from **anywhere** in `$HOME` — `--git-dir` and `--work-tree` are both absolute.
-- 🌐 `core.worktree` is set to the **absolute Mac path** (`/Users/downeyflyfan`). The repo isn't portable to Omen — it doesn't need to be.
+- 🌐 `core.worktree` is set to the **absolute path** of `$HOME` at setup time (e.g. `/Users/<you>` on macOS or `/home/<you>` on Linux). The setup commands use `"$HOME"`, so they automatically work on both platforms.
 - 🚫 Do **not** put `~/.config/terminal_workflow/` into Unison's path list. Doing so would copy the `.git/` dir to Omen and create a divergent ref state.
 - 🧹 To untrack a file without deleting it: `dotcfg rm --cached <path>`.
 
@@ -225,7 +242,7 @@ Released under the MIT License.
 
 <div align="center">
 
-⭐ Built with ❤️ and ☕ on macOS ⭐
+⭐ Built with ❤️ and ☕ on macOS 🍎 and Linux 🐧 ⭐
 
 <sub>If you find this approach useful, give it a star or fork it!</sub>
 
