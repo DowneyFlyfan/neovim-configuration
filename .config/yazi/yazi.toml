@@ -57,11 +57,15 @@ play = [
   { run = 'open "$@"',               desc = "Play",       for = "macos" },
   { run = 'mpv --force-window "$@"', desc = "Play (mpv)", orphan = true, for = "linux" },
 ]
+# macOS-only: force PowerPoint app for .ppt/.pptx. Linux falls back to `open` opener.
+powerpoint = [
+  { run = 'open -a "Microsoft PowerPoint" "$@"', desc = "Open in PowerPoint", for = "macos" },
+]
 
 [open]
 # nvim default (first entry). Media handled by macOS `open`. Archives extract.
 rules = [
-  { name = "*/",                          use = ["edit", "open", "reveal"] },
+  { url = "*/",                           use = ["edit", "open", "reveal"] },
   { mime = "text/*",                      use = ["edit", "reveal"] },
   { mime = "image/*",                     use = ["open", "reveal"] },
   { mime = "video/*",                     use = ["play", "reveal"] },
@@ -71,6 +75,15 @@ rules = [
   { mime = "*/javascript",                use = ["edit", "reveal"] },
   { mime = "application/{xml,toml,yaml,x-yaml,x-www-form-urlencoded}", use = ["edit", "reveal"] },
   { mime = "application/pdf",             use = ["open", "reveal"] },
+  # PowerPoint: match by extension first (pptx MIME is `application/zip` so MIME match unreliable).
+  # Must come BEFORE zip/extract rules below.
+  { url = "*.ppt",  use = ["powerpoint", "open", "reveal"] },
+  { url = "*.pptx", use = ["powerpoint", "open", "reveal"] },
+  { url = "*.pptm", use = ["powerpoint", "open", "reveal"] },
+  { url = "*.ppsx", use = ["powerpoint", "open", "reveal"] },
+  { url = "*.ppsm", use = ["powerpoint", "open", "reveal"] },
+  { url = "*.potx", use = ["powerpoint", "open", "reveal"] },
+  { url = "*.potm", use = ["powerpoint", "open", "reveal"] },
   { mime = "application/zip",             use = ["extract", "reveal"] },
   { mime = "application/gzip",            use = ["extract", "reveal"] },
   { mime = "application/x-tar",           use = ["extract", "reveal"] },

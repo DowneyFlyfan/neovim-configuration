@@ -8,7 +8,10 @@ require("codecompanion").setup({
 					},
 					schema = {
 						model = {
-							default = "deepseek-chat",
+							default = "deepseek-v4-flash",
+						},
+						["thinking.type"] = {
+							default = "disabled",
 						},
 					},
 				})
@@ -31,10 +34,10 @@ require("codecompanion").setup({
 
 	interactions = {
 		chat = {
-			adapter = "gemini",
+			adapter = "deepseek",
 		},
 		inline = {
-			adapter = "gemini",
+			adapter = "deepseek",
 		},
 	},
 
@@ -74,7 +77,7 @@ require("codecompanion").setup({
 					role = "user",
 					content = function(context)
 						local input =
-							require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
+							require("codecompanion.helpers.code").get_code(context.start_line, context.end_line)
 
 						return string.format(
 							[[请解释 buffer %d 中的这段代码:
@@ -124,7 +127,7 @@ require("codecompanion").setup({
 					role = "user",
 					content = function(context)
 						local input =
-							require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
+							require("codecompanion.helpers.code").get_code(context.start_line, context.end_line)
 
 						return string.format(
 							[[请优化 buffer %d 中的代码:
@@ -183,7 +186,7 @@ require("codecompanion").setup({
 					content = function(context)
 						if context.is_visual then
 							local input =
-								require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
+								require("codecompanion.helpers.code").get_code(context.start_line, context.end_line)
 							return "\n" .. input
 						else
 							return "生成符合以下描述的LaTeX公式："
@@ -226,7 +229,7 @@ require("codecompanion").setup({
 					role = "user",
 					content = function(context)
 						local input =
-							require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
+							require("codecompanion.helpers.code").get_code(context.start_line, context.end_line)
 
 						return string.format(
 							[[请根据以下注释补全内容：
@@ -277,7 +280,7 @@ require("codecompanion").setup({
 					content = function(context)
 						if context.is_visual then
 							local input =
-								require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
+								require("codecompanion.helpers.code").get_code(context.start_line, context.end_line)
 							return "请将以下内容转换为Markdown表格：\n" .. input
 						else
 							return "请生成符合以下描述的Markdown表格："
@@ -319,7 +322,7 @@ require("codecompanion").setup({
 					role = "user",
 					content = function(context)
 						local input =
-							require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
+							require("codecompanion.helpers.code").get_code(context.start_line, context.end_line)
 
 						return string.format(
 							[[buffer %d:
@@ -360,7 +363,7 @@ vim.api.nvim_create_autocmd("filetype", {
 		end
 
 		-- into insert mode
-		vim.keymap.set("v", "a", ":CodeCompanion ", { noremap = true, silent = true })
+		vim.keymap.set("v", "a", ":CodeCompanion ", { noremap = true, silent = false })
 
 		-- toggle global adapter (gemini <-> deepseek)
 		vim.keymap.set("n", "<space>at", function()

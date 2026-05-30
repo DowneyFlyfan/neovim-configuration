@@ -401,34 +401,34 @@ ls.add_snippets("markdown", {
 
 	-- Arrows, Comparator
 	ls.snippet("ra", {
-		t("\\xrightarrow{"),
+		t("\\rightarrow{"),
 		i(1, ""),
 		t("} "),
 	}),
 	ls.snippet("Ra", {
-		t("\\xRightarrow{"),
+		t("\\Rightarrow{"),
 		i(1, ""),
 		t("} "),
 	}),
 
 	ls.snippet("la", {
-		t("\\xleftarrow{"),
+		t("\\leftarrow{"),
 		i(1, ""),
 		t("} "),
 	}),
 	ls.snippet("La", {
-		t("\\xLeftarrow{"),
+		t("\\Leftarrow{"),
 		i(1, ""),
 		t("} "),
 	}),
 
 	ls.snippet("ar", {
-		t("\\xleftrightarrow{"),
+		t("\\leftrightarrow{"),
 		i(1, ""),
 		t("} "),
 	}),
 	ls.snippet("Ar", {
-		t("\\xLeftrightarrow{"),
+		t("\\Leftrightarrow{"),
 		i(1, ""),
 		t("} "),
 	}),

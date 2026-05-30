@@ -78,12 +78,15 @@ function yazi() {
 
 # ---------- Shared aliases ----------
 alias az="yazi"
-alias pip="pip3"
-alias vi='nvim'
+alias pip='python -m pip'
+alias pip3='python -m pip'
+alias vi='env -u PIP_PREFIX nvim'
 alias python='python3'
 alias ssh="TERM=xterm-256color ssh"
 alias ex='exit'
 alias claudec='claude --dangerously-skip-permissions -c 2>/dev/null || claude --dangerously-skip-permissions'
+# claude-tex: wraps claude with kitty-graphics LaTeX rendering (~/.local/bin/claude-tex)
+alias claudet='claude-tex --dangerously-skip-permissions -c 2>/dev/null || claude-tex --dangerously-skip-permissions'
 alias claudeh='claude-haha --dangerously-skip-permissions -c 2>/dev/null || claude-haha --dangerously-skip-permissions'
 
 # eza
@@ -145,3 +148,7 @@ conda() {
 # ---------- Amazon Q post block. Keep at the bottom. ----------
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && \
     builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/downeyflyfan/.local/bin:$PATH"

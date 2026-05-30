@@ -107,7 +107,9 @@ require("mason-nvim-dap").setup({
 require("mason-tool-installer").setup({
 	ensure_installed = {
 		"stylua",
-		"black",
+		-- black: managed via `uv tool install black` (immune to conda python upgrades).
+		-- Mason's black venv breaks whenever miniconda's python3.X is replaced,
+		-- because the venv shebang pins to a specific python that gets removed.
 		"prettierd",
 		"prettier",
 		"tex-fmt",
